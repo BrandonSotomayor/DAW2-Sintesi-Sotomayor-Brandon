@@ -329,21 +329,29 @@ $routes->group("api", function ($routes) {
 
                 $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
                 $routes->post('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
-                
         
                 $routes->options('catalogo',"ApiUsuarioController::catalogo");
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->get('reservar',"LibrosController::reservar");
-        
-                $routes->get('recogido',"LibrosController::recogido");
-        
-                $routes->get('historial_reservas',"LibrosController::historial_reservas");
-        
-                $routes->get('formulario_opinion',"LibrosController::formulario_opinion");
-        
-                $routes->post('opinar',"LibrosController::opinar");
+                $routes->options('reservar',"ApiUsuarioController::reservar");
+                $routes->get('reservar',"ApiUsuarioController::reservar");
 
+                $routes->options('recogido',"ApiUsuarioController::recogido");
+                $routes->get('recogido',"ApiUsuarioController::recogido");
+
+                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
+                $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
+        
+                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+                $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+
+
+
+                $routes->options('opinar',"ApiUsuarioController::opinar");
+                $routes->post('opinar',"ApiUsuarioController::opinar");
+
+
+                
                 $routes->get('opiniones',"LibrosController::opiniones");
         
                 $routes->get('devolver',"LibrosController::devolver");

@@ -4,7 +4,10 @@ namespace App\Controllers;
 
 use App\Models\EjemplaresModel;
 use App\Models\LibrosModel;
+use App\Models\OpinionesModel;
+use App\Models\PrestamosModel;
 use App\Models\ProfesoresModel;
+use App\Models\ReservasModel;
 use App\Models\UsuariosModel;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -161,6 +164,174 @@ class ApiUsuarioController extends ResourceController
             ];
         }
         return $this->respond($response);
+    }
+
+    public function reservar(){
+
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 3 && $datos != null ){
+            
+            $model_reserva = new ReservasModel();
+            $model_usuario = new UsuariosModel();
+            $model_ejemplar = new EjemplaresModel();
+
+            $usuario = $model_usuario->obtener_usuario($token_data->dni_nie);
+            if ( $usuario['id_penalizacion'] == null  ){
+                $data = [
+                    'id_ejemplar'=>$datos['id_ejemplar'],
+                    'dni_nie' => $datos['dni_nie']
+                ];
+                $model_reserva->insert($data);
+
+                $data = [
+                    'estado_eje' => 'reservado'
+                ];
+                $model_ejemplar->update($datos['id_ejemplar'],$data);
+
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'La reserva lo aprueba el responsable',
+                ];
+            }else {
+                $response = [
+                    'status' => 500,
+                    'error' => true,
+                    'messages' => 'Tienes penalización vigente',
+                ];
+            }
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+    }
+
+    public function recogido(){
+
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 3 && $datos != null ){
+            
+            $model = new ReservasModel();
+            $model_prestamo = new PrestamosModel();
+
+            $fecha_entrega_libro = date('Y-m-d');
+            $fecha_devolucion = $fecha_entrega_libro;
+            $fecha_devolucion= date("Y-m-d",strtotime($fecha_devolucion."+ 15 days")); 
+            
+            $data = [
+                'fecha_devolucion_res'=>$fecha_devolucion,
+                'fecha_entrega_libro'=>$fecha_entrega_libro,
+                'estado_res' => 'en curso'
+            ];
+            $model->actualizar_reserva($datos['id_reserva'],$data);
+            
+            $data = [
+                'id_ejemplar'=>$datos['id_ejemplar'],
+                'dni_nie'=>$token_data->dni_nie,
+                'fecha_inicio_pre'=>$fecha_entrega_libro,
+                'fecha_devolucion_pre'=>$fecha_devolucion,
+            ];
+            $model_prestamo->insertar_prestamo($data);
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Libro recogido, devolver el '.$fecha_devolucion,
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+
+    }
+
+    public function historial_reservas(){
+
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        if ( $token_data->rol == 3 ){
+            
+            $model_reserva = new ReservasModel();
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Historial de reservas. Solo muestra las reservas finalizadas',
+                'reservas'=>$model_reserva->obtener_reservas_usuario($token_data->dni_nie)->getResult()
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+    }
+
+    public function formulario_opinion(){
+
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 3 && $datos != null ){
+            
+            $model = new LibrosModel();
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Libro a opinar',
+                'libro' => $model->obtener_libro($datos['isbn_13'])
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+    }
+
+    public function opinar(){
+
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 3 && $datos != null ){
+            
+            $model = new OpinionesModel();
+
+            $data = [
+                'isbn_13'=> $datos['isbn_13'],
+                'dni_nie'=>$token_data->dni_nie,
+                'opinion'=>$datos['opinion']
+            ];
+            $model->insert($data);
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Opinión guardada',
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+
+        return redirect()->to(base_url('usuarios/privado/'.session()->get('rol')));
     }
     /**
      * Return an array of resource objects, themselves in array format

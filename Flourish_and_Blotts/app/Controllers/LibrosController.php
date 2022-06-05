@@ -113,7 +113,6 @@ class LibrosController extends BaseController
 
         $model = new ReservasModel();
         $model_prestamo = new PrestamosModel();
-        $model_regreso = new RegresosModel();
 
         $datos = $this->request->getVar();
         $fecha_entrega_libro = date('Y-m-d');
