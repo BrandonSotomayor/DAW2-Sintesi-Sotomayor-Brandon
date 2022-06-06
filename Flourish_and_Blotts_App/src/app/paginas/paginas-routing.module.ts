@@ -12,6 +12,10 @@ const routes: Routes = [
         path: 'iniciarsesion',
         loadChildren: () => import('./iniciarsesion/iniciarsesion.module').then( m => m.IniciarsesionPageModule)
       },
+      {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+      },
     ]
   },
   {

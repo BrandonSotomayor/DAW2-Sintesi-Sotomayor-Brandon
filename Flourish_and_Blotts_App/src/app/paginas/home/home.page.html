@@ -4,18 +4,47 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Flourish & Blotts</ion-title>
-    <ion-buttons slot="end">Iniciar Sesión</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-item>
+  <ion-grid>
+    <ion-row style="margin-top: 25px;">
+      <ion-col>
+        <img src="https://cdn.pixabay.com/photo/2014/10/14/20/14/library-488690__340.jpg">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="10">
         <ion-row>
-          <ion-item>Entra</ion-item>
+          <ion-col></ion-col>
+          <ion-col size="4"><b>Descripción</b></ion-col>
+          <ion-col></ion-col>
         </ion-row>
-    </ion-item>
-    <ion-button color="danger">bIBLIO</ion-button>
-  </ion-list>
+        <ion-item>{{biblioteca.descripcion}}</ion-item>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col size="4"><b>Dirección</b></ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+        <ion-item>{{biblioteca.direccion}}</ion-item>
+
+        <!--
+        <ion-item *ngFor="let biblioteca of bibliotecas">
+          {{biblioteca.descripcion}}
+        </ion-item>
+        
+        
+        <ion-item>{{biblioteca.descripcion}}</ion-item>
+        <ion-item>{{biblioteca.direccion}}</ion-item>
+        <ion-item>{{biblioteca.provincia}}</ion-item>
+        <ion-item>{{biblioteca.tipo}}</ion-item>
+        <ion-item>{{biblioteca.contruccion}}</ion-item>
+        -->
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
