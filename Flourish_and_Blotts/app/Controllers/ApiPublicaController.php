@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BibliotecasModel;
 use App\Models\EjemplaresModel;
 use App\Models\LibrosModel;
+use App\Models\RolesModel;
 use App\Models\UsuariosModel;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -154,9 +155,7 @@ class ApiPublicaController extends ResourceController
                 "dni_nie" => $token_data->dni_nie,
                 'correo_electronico'=>$token_data->correo_electronico,
                 'rol'=>$token_data->rol,
-                'id_usuario'=> $token_data->id_usuario
-
-                //"token-email" => $token_data->email,
+                'nombre_rol'=> $token_data->nombre_rol
             ]
         ];
         return $this->respond($response);
@@ -186,7 +185,9 @@ class ApiPublicaController extends ResourceController
             helper("form");
 
             $model = new UsuariosModel();
+            $model_roles = new RolesModel();
             $user = $model->getUserByMailOrUsername($this->request->getVar('correo_electronico'));
+            $nombre_rol = $model_roles->nombre_rol($user['id_rol']);
 
             if (!$user) {
                 $response = [
@@ -218,6 +219,7 @@ class ApiPublicaController extends ResourceController
                 "nombre" => $user['nombre'],
                 "correo_electronico" => $user['correo_electronico'],
                 'rol'=>$user['id_rol'],
+                'nombre_rol'=>$nombre_rol['nombre_rol']
             );
             $token = newTokenJWT($cfgAPI->config(), $data);
             /****************** END TOKEN GENERATION **************/
@@ -225,8 +227,8 @@ class ApiPublicaController extends ResourceController
             $response = [
                 'status' => 200,
                 'error' => false,
-                'messages' => 'User logged In successfully',
-                'token' => $token
+                'messages' => 'Has iniciado sesión',
+                'token' => $token,
             ];
             return $this->respondCreated($response);
             

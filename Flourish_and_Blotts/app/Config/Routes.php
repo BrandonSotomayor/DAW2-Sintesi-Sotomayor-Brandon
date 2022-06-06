@@ -119,7 +119,7 @@ $routes->group("usuarios", function ($routes) {
     });
 
     //PROFESOR
-    $routes->group('privado/3',['filter'=>'Autentica'],function($routes){
+    $routes->group('privado/3',['filter'=>'Autentica:3'],function($routes){
 
         $routes->get('mi_cuenta',"UsuariosController::mi_cuenta");
         $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_profesor_post");
@@ -132,6 +132,8 @@ $routes->group("usuarios", function ($routes) {
 
         $routes->get('recogido',"LibrosController::recogido");
 
+        $routes->get('devolver',"LibrosController::devolver");
+
         $routes->get('historial_reservas',"LibrosController::historial_reservas");
 
         $routes->get('formulario_opinion',"LibrosController::formulario_opinion");
@@ -140,16 +142,14 @@ $routes->group("usuarios", function ($routes) {
 
         $routes->get('opiniones',"LibrosController::opiniones");
 
-        $routes->get('devolver',"LibrosController::devolver");
-
     });
 
     //ESTUDIANTE
-    $routes->group('privado/4',['filter'=>'Autentica'],function($routes){
-        $routes->get('inicio',"UsuariosController::inicio");
+    $routes->group('privado/4',['filter'=>'Autentica:4'],function($routes){
 
         $routes->get('mi_cuenta',"UsuariosController::mi_cuenta");
-        $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_estudiante_post");
+
+        $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_profesor_post");
 
         $routes->get('activar_desactivar',"UsuariosController::activar_desactivar");
 
@@ -159,6 +159,8 @@ $routes->group("usuarios", function ($routes) {
 
         $routes->get('recogido',"LibrosController::recogido");
 
+        $routes->get('devolver',"LibrosController::devolver");
+
         $routes->get('historial_reservas',"LibrosController::historial_reservas");
 
         $routes->get('formulario_opinion',"LibrosController::formulario_opinion");
@@ -167,15 +169,13 @@ $routes->group("usuarios", function ($routes) {
 
         $routes->get('opiniones',"LibrosController::opiniones");
 
-        $routes->get('devolver',"LibrosController::devolver");
-
     });
 
     //PAS
-    $routes->group('privado/5',['filter'=>'Autentica'],function($routes){
-        $routes->get('inicio',"UsuariosController::inicio");
+    $routes->group('privado/5',['filter'=>'Autentica:5'],function($routes){
 
         $routes->get('mi_cuenta',"UsuariosController::mi_cuenta");
+
         $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_usuario_post");
 
         $routes->get('activar_desactivar',"UsuariosController::activar_desactivar");
@@ -186,6 +186,8 @@ $routes->group("usuarios", function ($routes) {
 
         $routes->get('recogido',"LibrosController::recogido");
 
+        $routes->get('devolver',"LibrosController::devolver");
+
         $routes->get('historial_reservas',"LibrosController::historial_reservas");
 
         $routes->get('formulario_opinion',"LibrosController::formulario_opinion");
@@ -193,8 +195,6 @@ $routes->group("usuarios", function ($routes) {
         $routes->post('opinar',"LibrosController::opinar");
 
         $routes->get('opiniones',"LibrosController::opiniones");
-
-        $routes->get('devolver',"LibrosController::devolver");
 
     });
 
@@ -338,6 +338,9 @@ $routes->group("api", function ($routes) {
 
                 $routes->options('recogido',"ApiUsuarioController::recogido");
                 $routes->get('recogido',"ApiUsuarioController::recogido");
+                
+                $routes->options('devolver',"ApiUsuarioController::devolver");
+                $routes->get('devolver',"ApiUsuarioController::devolver");
 
                 $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
                 $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
@@ -345,73 +348,85 @@ $routes->group("api", function ($routes) {
                 $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
                 $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
 
-
-
                 $routes->options('opinar',"ApiUsuarioController::opinar");
                 $routes->post('opinar',"ApiUsuarioController::opinar");
 
-
-                
-                $routes->get('opiniones',"LibrosController::opiniones");
-        
-                $routes->get('devolver',"LibrosController::devolver");
+                $routes->options('opiniones',"ApiUsuarioController::opiniones");
+                $routes->get('opiniones',"ApiUsuarioController::opiniones");
         
             });
         
             //ESTUDIANTE
             $routes->group('privado/4',['filter'=>'jwt'],function($routes){
-                $routes->get('inicio',"UsuariosController::inicio");
+                
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+                $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
+                $routes->post('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
         
-                $routes->get('mi_cuenta',"UsuariosController::mi_cuenta");
-                $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_estudiante_post");
+                $routes->options('catalogo',"ApiUsuarioController::catalogo");
+                $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->get('activar_desactivar',"UsuariosController::activar_desactivar");
+                $routes->options('reservar',"ApiUsuarioController::reservar");
+                $routes->get('reservar',"ApiUsuarioController::reservar");
+
+                $routes->options('recogido',"ApiUsuarioController::recogido");
+                $routes->get('recogido',"ApiUsuarioController::recogido");
+                
+                $routes->options('devolver',"ApiUsuarioController::devolver");
+                $routes->get('devolver',"ApiUsuarioController::devolver");
+
+                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
+                $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
         
-                $routes->get('catalogo',"UsuariosController::catalogo");
-        
-                $routes->get('reservar',"LibrosController::reservar");
-        
-                $routes->get('recogido',"LibrosController::recogido");
-        
-                $routes->get('historial_reservas',"LibrosController::historial_reservas");
-        
-                $routes->get('formulario_opinion',"LibrosController::formulario_opinion");
-        
-                $routes->post('opinar',"LibrosController::opinar");
+                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+                $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+
+                $routes->options('opinar',"ApiUsuarioController::opinar");
+                $routes->post('opinar',"ApiUsuarioController::opinar");
+
+                $routes->options('opiniones',"ApiUsuarioController::opiniones");
+                $routes->get('opiniones',"ApiUsuarioController::opiniones");
         
             });
         
             //PAS
             $routes->group('privado/5',['filter'=>'jwt'],function($routes){
-                $routes->get('inicio',"UsuariosController::inicio");
+                
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+                $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
+                $routes->post('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
         
-                $routes->get('mi_cuenta',"UsuariosController::mi_cuenta");
-                $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_usuario_post");
+                $routes->options('catalogo',"ApiUsuarioController::catalogo");
+                $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->get('activar_desactivar',"UsuariosController::activar_desactivar");
+                $routes->options('reservar',"ApiUsuarioController::reservar");
+                $routes->get('reservar',"ApiUsuarioController::reservar");
+
+                $routes->options('recogido',"ApiUsuarioController::recogido");
+                $routes->get('recogido',"ApiUsuarioController::recogido");
+                
+                $routes->options('devolver',"ApiUsuarioController::devolver");
+                $routes->get('devolver',"ApiUsuarioController::devolver");
+
+                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
+                $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
         
-                $routes->get('catalogo',"UsuariosController::catalogo");
-        
-                $routes->get('reservar',"LibrosController::reservar");
-        
-                $routes->get('recogido',"LibrosController::recogido");
-        
-                $routes->get('historial_reservas',"LibrosController::historial_reservas");
-        
-                $routes->get('formulario_opinion',"LibrosController::formulario_opinion");
-        
-                $routes->post('opinar',"LibrosController::opinar");
+                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+                $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+
+                $routes->options('opinar',"ApiUsuarioController::opinar");
+                $routes->post('opinar',"ApiUsuarioController::opinar");
+
+                $routes->options('opiniones',"ApiUsuarioController::opiniones");
+                $routes->get('opiniones',"ApiUsuarioController::opiniones");
         
             });
         
-            $routes->get('privado/(:segment)','UsuariosController::pagina_privada/$1');
-            $routes->get('privado/(:segment)/libros','UsuariosController::gestion_libros/$1');
-        
-        });
-
-    $routes->options("agregar_usuario", "ApiPublicaController::agregar_usuario");
-    $routes->post("agregar_usuario", "ApiPublicaController::agregar_usuario");
-    
+        });    
     
 });
 

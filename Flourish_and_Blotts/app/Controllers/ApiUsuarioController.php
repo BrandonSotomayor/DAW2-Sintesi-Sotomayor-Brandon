@@ -5,8 +5,10 @@ namespace App\Controllers;
 use App\Models\EjemplaresModel;
 use App\Models\LibrosModel;
 use App\Models\OpinionesModel;
+use App\Models\PenalizacionesModel;
 use App\Models\PrestamosModel;
 use App\Models\ProfesoresModel;
+use App\Models\RegresosModel;
 use App\Models\ReservasModel;
 use App\Models\UsuariosModel;
 use CodeIgniter\RESTful\ResourceController;
@@ -255,6 +257,82 @@ class ApiUsuarioController extends ResourceController
 
     }
 
+    public function devolver(){
+        
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 3 && $datos != null ){
+            
+            $model = new RegresosModel();
+            $model_prestamo = new PrestamosModel();
+            $model_penalizacion = new PenalizacionesModel();
+            $model_usuario = new UsuariosModel();
+            $model_ejemplares = new EjemplaresModel();
+            $model_reservas = new ReservasModel();
+
+            $fecha_devolucion = date('Y-m-d');
+            $fec_fin_penalizacion= date("Y-m-d",strtotime($fecha_devolucion."+ 15 days")); 
+            $prestamo = $model_prestamo->prestamo_devuelto($datos['id_ejemplar'],$token_data->dni_nie)->getResult()[0];
+            $id_prestamo = $prestamo->id_prestamo;
+            $fecha_devolucion_prestamo = $prestamo->fecha_devolucion_pre;
+
+            if ( $fecha_devolucion_prestamo < $fecha_devolucion ){
+                //PENALIZAR
+                $data = [
+                    'id_prestamo'=> $id_prestamo,
+                    'fecha_inicio_penalizacion'=> $fecha_devolucion,
+                    'motivo' => 'Se ha retrasado en devolver el libro',
+                    'dias_penalizacion' => '15'
+                ];
+                $model_penalizacion->insert($data);
+    
+                $penalizacion=  $model_penalizacion->obtener_penalizacion($id_prestamo);
+                $data = [
+                    'id_penalizacion' => $penalizacion['id_prestamo']
+                ];
+                $model_usuario->actualizar_usuario($datos['id_usuario'],$data);
+
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Has sido penalizado',
+                ];
+                return $this->respond($response);
+            }
+            $data = [
+                'estado_eje' => 'disponible'
+            ];
+            $model_ejemplares->update($datos['id_ejemplar'],$data);
+    
+            $data = [
+                'estado_res' => 'finalizado'
+            ];
+            $model_reservas->update($datos['id_reserva'],$data);
+    
+            $data = [
+                'dni_nie' => $token_data->dni_nie,
+                'id_ejemplar' => $datos['id_ejemplar'],
+                'fecha_devolucion'=>$fecha_devolucion
+            ];
+            $model->insert($data);
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Reserva finalizada',
+                'fec_fin_penalizacion' => $fec_fin_penalizacion
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+
+    }
+
     public function historial_reservas(){
 
         $token_data = json_decode($this->request->header("token-data")->getValue());
@@ -332,6 +410,31 @@ class ApiUsuarioController extends ResourceController
         return $this->respond($response);
 
         return redirect()->to(base_url('usuarios/privado/'.session()->get('rol')));
+    }
+
+    public function opiniones(){
+
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 3 && $datos != null ){
+            
+            $model = new OpinionesModel();
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Opiniones',
+                'opiniones' => $model->obtener_opiniones($datos['isbn_13'])->getResult()
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+
     }
     /**
      * Return an array of resource objects, themselves in array format

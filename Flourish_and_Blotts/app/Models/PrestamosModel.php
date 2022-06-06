@@ -54,16 +54,26 @@ class PrestamosModel extends Model
         return $this->update($id_prestamo,$data);
     }
 
-    public function prestamo_devuelto($id_ejemplar=null){
+    public function prestamo_devuelto($id_ejemplar=null,$dni_nie=null){
+
+        if ( $dni_nie!=null ){
+
+            $db      = \Config\Database::connect();
+            $builder = $db->table('prestamos');
+            
+            $builder->select('*');
+            $builder->join('ejemplares', 'ejemplares.id_ejemplar = prestamos.id_ejemplar');
+            $builder->join('reservas', 'reservas.id_ejemplar = ejemplares.id_ejemplar');
+            $query = $builder->getWhere(['prestamos.id_ejemplar'=>$id_ejemplar,'prestamos.dni_nie'=>$dni_nie,'reservas.estado_res'=>'en curso']);
+            return $query;
+        }
 
         $db      = \Config\Database::connect();
         $builder = $db->table('prestamos');
         
         $builder->select('*');
-        //$builder->join('usuarios', 'usuarios.id_usuario = reservas.id_usuario');
         $builder->join('ejemplares', 'ejemplares.id_ejemplar = prestamos.id_ejemplar');
         $builder->join('reservas', 'reservas.id_ejemplar = ejemplares.id_ejemplar');
-        //$builder->join('libros', 'libros.id_libro = ejemplares.id_libro');
         $query = $builder->getWhere(['prestamos.id_ejemplar'=>$id_ejemplar,'prestamos.dni_nie'=>session()->get('dni_nie')]);
         return $query;
 
