@@ -237,7 +237,8 @@ $routes->group("api", function ($routes) {
 
         $routes->group("usuarios", function ($routes) {
         
-            $routes->group('privado/1',['filter'=>'jwt'],function($routes){
+            //$routes->group('privado/1',['filter'=>'jwt'],function($routes){
+            $routes->group('privado/1',function($routes){
                 
                 $routes->options('gestion_responsable',"ApiUsuarioAdministradorController::gestion_responsable");
                 $routes->get('gestion_responsable',"ApiUsuarioAdministradorController::gestion_responsable");

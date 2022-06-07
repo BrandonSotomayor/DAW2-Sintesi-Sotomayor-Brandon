@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="2"><ion-button (click)="mi_cuenta()" color="medium"><ion-icon name="person-circle-outline"></ion-icon></ion-button></ion-col>
+      <ion-col size="3"><ion-button (click)="cerrar_sesion()" color="dark"><ion-icon name="log-out-outline"></ion-icon>Cerrar</ion-button></ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

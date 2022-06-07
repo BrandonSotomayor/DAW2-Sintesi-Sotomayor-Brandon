@@ -1,0 +1,105 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Responsable</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="2"><ion-button (click)="mi_cuenta()" color="medium"><ion-icon name="person-circle-outline"></ion-icon></ion-button></ion-col>
+      <ion-col size="3"><ion-button (click)="cerrar_sesion()" color="dark"><ion-icon name="log-out-outline"></ion-icon>Cerrar</ion-button></ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <h2>Funcionalidades</h2>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <h5>Libro</h5>
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="startScanner()" color="dark">+<ion-icon name="book-outline"></ion-icon></ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <h5>Ejemplar</h5>
+        </ion-item>
+        <ion-item>
+          <ion-button color="dark">+<ion-icon name="albums-outline"></ion-icon></ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <h2>Gestión</h2>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-button color="dark">Reservas</ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-button color="dark">Prestamos</ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-button color="dark">Regresos</ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      
+    </ion-row>
+    <ion-row *ngIf="nuevo_libro">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{agregar_libro.titulo}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Editorial: {{agregar_libro.editorial}}</p>
+          <p>Fec. Publicacion: {{agregar_libro.fecha_publicacion}}</p>
+          <p>Núm Páginas: {{agregar_libro.numero_paginas}}</p>
+        </ion-card-content>
+      </ion-card>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col><ion-button color="dark">Agregar</ion-button></ion-col>
+        <ion-col><ion-button color="medium">Cancelar</ion-button></ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-row>
+    
+
+    <div ><!--*ngIf=""-->
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col>
+          <h2>Reservas</h2>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-button (click)="obtainBook()">Prueba</ion-button>
+      </ion-row>
+    </div>
+  </ion-grid>
+
+</ion-content>
