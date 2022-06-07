@@ -6,7 +6,8 @@ import { PaginasPage } from './paginas.page';
 const routes: Routes = [
   {
     path: '',
-    component: PaginasPage,
+    redirectTo: 'paginas',
+    pathMatch: 'full',
     children: [
       {
         path: 'iniciarsesion',
@@ -16,12 +17,32 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
       },
+      {
+        path: 'privada-administrador',
+        loadChildren: () => import('./privada-administrador/privada-administrador.module').then( m => m.PrivadaAdministradorPageModule)
+      },
+      {
+        path: 'catalogo',
+        loadChildren: () => import('./catalogo/catalogo.module').then( m => m.CatalogoPageModule)
+      },
     ]
   },
   {
     path: 'iniciarsesion',
     loadChildren: () => import('./iniciarsesion/iniciarsesion.module').then( m => m.IniciarsesionPageModule)
-  }
+  },
+  {
+    path: 'privada-administrador',
+    loadChildren: () => import('./privada-administrador/privada-administrador.module').then( m => m.PrivadaAdministradorPageModule)
+  },
+  {
+    path: 'catalogo',
+    loadChildren: () => import('./catalogo/catalogo.module').then( m => m.CatalogoPageModule)
+  },
+  {
+    path: 'horario',
+    loadChildren: () => import('./horario/horario.module').then( m => m.HorarioPageModule)
+  },
 ];
 
 @NgModule({

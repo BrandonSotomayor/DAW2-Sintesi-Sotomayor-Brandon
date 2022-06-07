@@ -12,14 +12,6 @@ export class AppComponent {
 
   constructor(private _menu: MenuController) {}
 
-  openCathegories(): void {
-    this._cathegoriesIsOpen = !this._cathegoriesIsOpen;
-  }
-
-  isCathegoriesOpen(): boolean {
-    return this._cathegoriesIsOpen;
-  }
-
   closeMenu(): void {
     console.log("closing...");
     this._menu.close();

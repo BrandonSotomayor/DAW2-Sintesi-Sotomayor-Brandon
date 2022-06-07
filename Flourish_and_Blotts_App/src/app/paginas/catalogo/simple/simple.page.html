@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Catálogo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-item>
+        <ion-label position="floating">Título</ion-label>
+        <ion-input (keyup)="onKey($event)" [(ngModel)]="titulo"></ion-input>
+      </ion-item>
+
+    </ion-row>
+    <div *ngIf="uno_varios; else elseBlock">
+      <ion-row *ngFor="let libro of libros">
+        <ion-col size="5">
+          <img src="{{libro.imagen}}">
+        </ion-col>
+        <ion-col>
+          <ion-item><b>{{libro.titulo}}</b></ion-item>
+          <ion-item>{{libro.editorial}}</ion-item>
+          <ion-item>{{libro.idioma}}</ion-item>
+          <ion-item>Pág. {{libro.numero_paginas}}</ion-item>
+          <ion-item>ISBN:{{libro.isbn_13}}</ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ng-template #elseBlock>
+      <ion-row *ngFor="let libro of libros">
+        <ion-item *ngIf="libro.titulo.includes(titulo)">
+          <ion-col size="5">
+            <img src="{{libro.imagen}}">
+          </ion-col>
+          <ion-col>
+            <ion-item><b>{{libro.titulo}}</b></ion-item>
+            <ion-item>{{libro.editorial}}</ion-item>
+            <ion-item>{{libro.idioma}}</ion-item>
+            <ion-item>Pág. {{libro.numero_paginas}}</ion-item>
+            <ion-item>ISBN:{{libro.isbn_13}}</ion-item>
+          </ion-col>
+        </ion-item>
+      </ion-row>
+    </ng-template>
+  </ion-grid>
+
+</ion-content>

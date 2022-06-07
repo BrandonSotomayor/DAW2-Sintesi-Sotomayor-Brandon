@@ -12,39 +12,28 @@
   <ion-grid>
     <ion-row style="margin-top: 25px;">
       <ion-col>
-        <img src="https://cdn.pixabay.com/photo/2014/10/14/20/14/library-488690__340.jpg">
+        <img src="{{biblioteca.imagen}}">
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col size="10">
-        <ion-row>
-          <ion-col></ion-col>
-          <ion-col size="4"><b>Descripción</b></ion-col>
-          <ion-col></ion-col>
-        </ion-row>
-        <ion-item>{{biblioteca.descripcion}}</ion-item>
-        <ion-row>
-          <ion-col></ion-col>
-          <ion-col size="4"><b>Dirección</b></ion-col>
-          <ion-col></ion-col>
-        </ion-row>
-        <ion-item>{{biblioteca.direccion}}</ion-item>
+    <ion-row style="margin-top: 25px;">
+      <ion-item>{{biblioteca.descripcion}}</ion-item>
+    </ion-row>
 
-        <!--
-        <ion-item *ngFor="let biblioteca of bibliotecas">
-          {{biblioteca.descripcion}}
-        </ion-item>
-        
-        
-        <ion-item>{{biblioteca.descripcion}}</ion-item>
-        <ion-item>{{biblioteca.direccion}}</ion-item>
-        <ion-item>{{biblioteca.provincia}}</ion-item>
-        <ion-item>{{biblioteca.tipo}}</ion-item>
-        <ion-item>{{biblioteca.contruccion}}</ion-item>
-        -->
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <b>Dirección</b>
+            <ion-item>{{biblioteca.direccion}}</ion-item>
+
+            <b>Tipo</b>
+            <ion-item>{{biblioteca.tipo}}</ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <b>Província</b>
+            <ion-item>{{biblioteca.provincia}}</ion-item>
+
+            <b>Fecha construcción</b>
+            <ion-item>{{biblioteca.construccion}}</ion-item>
+          </ion-col>
+        </ion-row>
   </ion-grid>
 </ion-content>

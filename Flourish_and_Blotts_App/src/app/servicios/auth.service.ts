@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuthService {
 
-  private BASE_URL: string = "http://localhost:80/api";
+  private BASE_URL: string = "http://localhost:80/api/";
   private _email: string = null;
   private _passwd: string = null;
 
@@ -20,7 +20,7 @@ export class AuthService {
     També s'hi pot afegir el header 'Accept'*/
     let options: any = {
         headers: new HttpHeaders({
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         })
     }
 
@@ -34,7 +34,7 @@ export class AuthService {
     return new Promise(
         (resolve, reject) => {
             //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-            this._http.post(this.BASE_URL + "/iniciar_sesion", data, options).subscribe(
+            this._http.post(this.BASE_URL + "iniciar_sesion", data, options).subscribe(
                 (response: any) => {
                     if(response.status == 200) {
                         //Si tot va bé, emmagatzemem el TOKEN al LS
@@ -71,6 +71,7 @@ export class AuthService {
     this._email = null;
     this._passwd = null;
     localStorage.removeItem("TOKEN");
+    console.log('cerrado');
   }
   
   get token(): string {
@@ -86,6 +87,40 @@ export class AuthService {
         podeu comentar la comprovació de les credencials. En el codi final, aquesta comprovació 
         hi ha de ser*/
   isUserAuthenticated(): boolean {
-    return this._email != null && this._passwd != null && localStorage.getItem("TOKEN") != null;
+
+    return localStorage.getItem("TOKEN") != null;
+
+    //return this._email != null && this._passwd != null && localStorage.getItem("TOKEN") != null;
+  }
+
+  rol():void{
+    let options: any = {
+      headers: new HttpHeaders()
+      .set('Accept','application/json')
+      .set('Content-Type', 'application/json',)
+      .set('Authorization', 'Bearer: '+ localStorage.getItem('TOKEN'))
+    }
+
+    new Promise(
+      (resolve, reject) => {
+          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
+          this._http.get(this.BASE_URL + "rol", options).subscribe(
+              (response: any) => {
+                  if(response.status == 200) {
+                      console.log(response);
+                      //Si tot va bé, emmagatzemem el TOKEN al LS
+                      //localStorage.setItem("TOKEN", response.token);
+                      //resolve(true);
+                  }
+                  else {
+                    resolve(false);
+                  }
+              },
+              (error: any) => {
+                  reject("Error");
+              }
+          );
+      }
+    );
   }
 }

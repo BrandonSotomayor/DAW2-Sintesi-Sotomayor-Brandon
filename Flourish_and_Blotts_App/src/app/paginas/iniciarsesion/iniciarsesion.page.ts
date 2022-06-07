@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth.service';
@@ -9,19 +10,28 @@ import { AuthService } from 'src/app/servicios/auth.service';
 })
 export class IniciarsesionPage implements OnInit {
 
-  private email: string = 'admin@gmail.com';
-  private passwd: string = '1234';
+  private BASE_URL: string = "http://localhost:80/api";
+  public correo_electronico: string = '';
+  public contrasena: string = '';
 
-  constructor(private _router: Router, private _authService: AuthService) { }
+  constructor(private _router: Router, private _authService: AuthService, public _http: HttpClient) {
+    if ( this._authService.isUserAuthenticated() ) {
+      this._router.navigate(["paginas",'privada-administrador']);
+      console.log('cesion iniciada');
+    }
+    else {
+      this._router.navigate(["paginas",'iniciarsesion']);
+      console.log('cesion no iniciada');
+    }
+  }
   
   async iniciar_sesion(): Promise<void> {
     /*L'estructura try/catch ens permet gestionar qualsevol error de xarxa en la
     comunicació amb el servidor*/
     try {
-        const response = await this._authService.login(this.email, this.passwd);
-        console.log(response);
+        const response = await this._authService.login(this.correo_electronico, this.contrasena);
         if(response) {
-            this._router.navigate(["paginas",'iniciarsesion']);
+            this._router.navigate(["paginas",'privada-administrador']);
         }
     } catch(error) {
         console.log("Error!");
