@@ -134,4 +134,14 @@ class LibrosModel extends Model
         $query = $builder->get();
         return $query;
     }
+
+    public function inventario_pdf(){
+        $db      = \Config\Database::connect();
+        $builder = $db->table('libros');
+        
+        $builder->select('*');
+        $builder->join('ejemplares', 'ejemplares.isbn_13 = libros.isbn_13');
+        $query = $builder->getWhere(['ejemplares.eliminado'=>'no']);
+        return $query;
+    }
 }

@@ -223,13 +223,17 @@ $routes->group("api", function ($routes) {
             $routes->post('busqueda_avanzada', 'ApiPublicaController::busqueda_avanzada');
         });
 
+        $routes->options('pdf','ApiPublicaController::pdf');
+        $routes->get('pdf','ApiPublicaController::pdf');
+
     });
 
     //INICIAR SESION 
     $routes->options("iniciar_sesion", "ApiPublicaController::iniciar_sesion");
     $routes->post("iniciar_sesion", "ApiPublicaController::iniciar_sesion");
 
-    $routes->get('test', 'ApiPublicaController::test',['filter'=>'jwt']);
+    $routes->options('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
+    $routes->get('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
 
         $routes->group("usuarios", function ($routes) {
         

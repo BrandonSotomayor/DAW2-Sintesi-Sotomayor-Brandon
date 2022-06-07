@@ -19,7 +19,7 @@ class ApiPublicaController extends ResourceController
         $response = [
             'status' => 200,
             'error' => false,
-            'messages' => 'Ejemplares',
+            'messages' => 'Datos biblioteca',
             'data' => [
                 'biblioteca'=>$biblioteca,
             ]
@@ -132,15 +132,16 @@ class ApiPublicaController extends ResourceController
 
     }
     
-    public function test(){
+    public function rol(){
 
+        //$policy_name = $this->request->header("jwt-policy")->getValue();
         $token_data = json_decode($this->request->header("token-data")->getValue());
 
         // Get current config for this controller request as object
         // $token_config = json_decode($this->request->header("token-config")->getValue());
         
         // Get JWT policy config
-        // $policy_name = $this->request->header("jwt-policy")->getValue();
+        //$policy_name = $this->request->header("jwt-policy")->getValue();
 
         // check if user has permission or token policy is ok
         // if user no authorized
@@ -150,13 +151,11 @@ class ApiPublicaController extends ResourceController
             'status' => 200,
             'error' => false,
             'messages' => 'Test function ok',
-            'data' => [
-                "data" => time(),
-                "dni_nie" => $token_data->dni_nie,
-                'correo_electronico'=>$token_data->correo_electronico,
-                'rol'=>$token_data->rol,
-                'nombre_rol'=> $token_data->nombre_rol
-            ]
+            "data" => time(),
+            "dni_nie" => $token_data->dni_nie,
+            'correo_electronico'=>$token_data->correo_electronico,
+            'rol'=>$token_data->rol,
+            'nombre_rol'=> $token_data->nombre_rol
         ];
         return $this->respond($response);
     }
@@ -250,6 +249,9 @@ class ApiPublicaController extends ResourceController
             $libros = $model->libro_titulo($datos['titulo']);
 
             $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Libros encontrados',
                 'libros' => $libros->getResult(),
                 'titulo' => $titulo,
             ];
@@ -264,5 +266,45 @@ class ApiPublicaController extends ResourceController
             ];
             return $this->respond($response);
         }
+    }
+
+    public function pdf(){
+        
+            $dompdf = new \Dompdf\Dompdf();
+
+                $model = new LibrosModel();
+                $model_ejemplar = new EjemplaresModel();
+                $libros = $model->obtener_libro();
+                $ejemplares = $model_ejemplar->obtener_ejemplar();
+        
+                $html = '<div><div class="row"><h1 style="text-align: center;">Flourish & Blotts</h1></div>';
+        
+                foreach( $libros as $libro ) {
+                    $html .= '<h2>'.$libro['titulo'].'</h2>';
+                    $html .= '<p><b>QR de los ejemplares</b></p>';
+                    for( $i=0; $i<sizeof($ejemplares); $i++ ){
+                        
+                        if ( $libro['isbn_13'] == $ejemplares[$i]['isbn_13'] && $ejemplares[$i]['id_ejemplar'] > 9 ){
+                            $html .= '<p style="margin-top: 35px;margin-left:10%">'.$libro['isbn_13'].'-'.$ejemplares[$i]['id_ejemplar'].'</p>';
+                        }
+                        elseif ( $libro['isbn_13'] == $ejemplares[$i]['isbn_13'] && $ejemplares[$i]['id_ejemplar'] < 10 ) {
+                            $html .= '<p style="margin-top: 35px;margin-left:10%">'.$libro['isbn_13'].'-0'.$ejemplares[$i]['id_ejemplar'].'</p>';
+                        }
+                    }
+                }
+                $html .= '</div>';
+        
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                
+                $dompdf->stream("ejemplares.pdf",['Attachment'=>1]); // Force download
+                die; // Required. If no dies, PDF was corrupted to browser
+
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Pdf creado',
+                ];
+            return $this->respond($response);
     }
 }
