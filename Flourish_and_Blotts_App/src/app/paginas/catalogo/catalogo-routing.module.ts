@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'avanzada',
     loadChildren: () => import('./avanzada/avanzada.module').then( m => m.AvanzadaPageModule)
+  },
+  {
+    path: 'horario',
+    loadChildren: () => import('./../horario/horario.module').then( m => m.HorarioPageModule)
   }
 ];
 

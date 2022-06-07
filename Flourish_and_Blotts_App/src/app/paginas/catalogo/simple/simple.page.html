@@ -12,10 +12,16 @@
   <ion-grid>
     <ion-row>
 
-      <ion-item>
-        <ion-label position="floating">Título</ion-label>
-        <ion-input (keyup)="onKey($event)" [(ngModel)]="titulo"></ion-input>
-      </ion-item>
+      <ion-col size="9">
+        <ion-item>
+          <ion-label position="floating">Título</ion-label>
+          <ion-input (keyup)="onKey($event)" [(ngModel)]="titulo"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="pdf()" color="dark"><ion-icon name="download-outline"></ion-icon></ion-button>
+      </ion-col>
+      
 
     </ion-row>
     <div *ngIf="uno_varios; else elseBlock">

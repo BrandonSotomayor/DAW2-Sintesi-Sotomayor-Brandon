@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PublicaService } from 'src/app/servicios/publica.service';
 
 @Component({
   selector: 'app-horario',
@@ -7,7 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HorarioPage implements OnInit {
 
-  constructor() { }
+  public datos;
+  public biblioteca;
+  public responsables;
+
+  constructor(private _publicaS: PublicaService) {
+    this.horarios();
+   }
+
+  horarios(){
+    console.log(this._publicaS.horarios);
+    //this._publicaS.horarios_api();
+    this.biblioteca = this._publicaS.horarios.biblioteca;
+    this.responsables = this._publicaS.horarios.responsables;
+    //this.datos = this._publicaS.horarios;
+    console.log(this.responsables);
+  }
 
   ngOnInit() {
   }

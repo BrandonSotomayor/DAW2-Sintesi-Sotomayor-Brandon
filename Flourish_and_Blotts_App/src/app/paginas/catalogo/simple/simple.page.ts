@@ -10,7 +10,6 @@ import { PublicaService } from 'src/app/servicios/publica.service';
 export class SimplePage implements OnInit {
 
   public titulo = '';
-  public libros_buscados;
   public uno_varios = true;
 
   constructor(private _router: Router, private _publicaS: PublicaService) { 
@@ -25,17 +24,18 @@ export class SimplePage implements OnInit {
     if ( event.target.value != '' ){
       
       this.uno_varios = false;
-      let len = this._publicaS.catalogo.length;
+      /*let len = this._publicaS.catalogo.length;
       let catalogo = this._publicaS.catalogo;
       for ( let i=0;i<len;i++ ){
         let titulo = catalogo[i].titulo.toLowerCase();
         if ( titulo.includes(event.target.value) ){
-          
-          this.libros_buscados = catalogo[i];
         }
-      }
-      console.log(this.libros_buscados);
+      }*/
     }else this.uno_varios = true;
+  }
+
+  pdf(){
+    this._publicaS.pdf();
   }
 
   ngOnInit() {

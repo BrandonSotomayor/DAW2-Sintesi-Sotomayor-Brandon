@@ -1,9 +1,45 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>horario</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Horario</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="6"><h2>Horario General</h2></ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="3">
+        <ion-item><b>Dias</b></ion-item>
+        <ion-item>Lunes a Mier.</ion-item>
+        <ion-item>Jueves</ion-item>
+        <ion-item>Viernes</ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item><b>Mañanas</b></ion-item>
+        <ion-item>{{biblioteca.horario_manana_l_m}}</ion-item>
+        <ion-item>{{biblioteca.horario_manana_j}}</ion-item>
+        <ion-item>{{biblioteca.horario_manana_v}}</ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item><b>Tardes</b></ion-item>
+        <ion-item>{{biblioteca.horario_tarde_l_m}}</ion-item>
+        <ion-item></ion-item>
+        <ion-item></ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-item><b>Responsables Mañana: </b>{{responsables[0].nombre}}</ion-item>
+        <ion-item><b>Responsables Tarde: </b>{{responsables[1].nombre}}</ion-item>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

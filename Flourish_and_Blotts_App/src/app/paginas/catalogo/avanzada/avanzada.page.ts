@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { PublicaService } from 'src/app/servicios/publica.service';
 
 @Component({
   selector: 'app-avanzada',
@@ -11,10 +13,10 @@ export class AvanzadaPage implements OnInit {
   public titulo = '';
   public categoria = '';
 
-  constructor() { }
+  constructor(private _router: Router, private _publicaS: PublicaService) { }
 
-  buscar(){
-    
+  busqueda_avanzada(){
+    this._publicaS.busqueda_avanzada(this.autor,this.titulo,this.categoria);
   }
 
   ngOnInit() {
