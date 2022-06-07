@@ -98,7 +98,7 @@ export class AuthService {
       headers: new HttpHeaders()
       .set('Accept','application/json')
       .set('Content-Type', 'application/json',)
-      .set('Authorization', 'Bearer: '+ localStorage.getItem('TOKEN'))
+      .set('Authorization', 'Bearer: '+ this.token)
     }
 
     new Promise(
