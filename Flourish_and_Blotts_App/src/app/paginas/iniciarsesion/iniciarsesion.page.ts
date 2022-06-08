@@ -16,7 +16,7 @@ export class IniciarsesionPage implements OnInit {
 
   constructor(private _router: Router, private _authService: AuthService, public _http: HttpClient) {
     if ( this._authService.isUserAuthenticated() ) {
-      this._router.navigate(["paginas",'privada-administrador']);
+      this._router.navigate(["paginas",'administrador']);
       console.log('cesion iniciada');
     }
     else {
@@ -31,7 +31,7 @@ export class IniciarsesionPage implements OnInit {
     try {
         const response = await this._authService.login(this.correo_electronico, this.contrasena);
         if(response) {
-            this._router.navigate(["paginas",'privada-administrador']);
+            this._router.navigate(["paginas",'administrador']);
         }
     } catch(error) {
         console.log("Error!");

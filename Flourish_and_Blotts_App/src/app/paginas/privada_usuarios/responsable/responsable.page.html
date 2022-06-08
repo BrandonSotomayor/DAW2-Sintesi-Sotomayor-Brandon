@@ -37,7 +37,7 @@
           <h5>Ejemplar</h5>
         </ion-item>
         <ion-item>
-          <ion-button color="dark">+<ion-icon name="albums-outline"></ion-icon></ion-button>
+          <ion-button (click)="startScannerEjemplar()" color="dark">+<ion-icon name="albums-outline"></ion-icon></ion-button>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -71,18 +71,20 @@
     <ion-row *ngIf="nuevo_libro">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>{{agregar_libro.titulo}}</ion-card-title>
+          <ion-card-title>{{libro.titulo}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p>Editorial: {{agregar_libro.editorial}}</p>
-          <p>Fec. Publicacion: {{agregar_libro.fecha_publicacion}}</p>
-          <p>Núm Páginas: {{agregar_libro.numero_paginas}}</p>
+          <p>Editorial: {{libro.editorial}}</p>
+          <p>Fec. Publicacion: {{libro.fecha_publicacion}}</p>
+          <p>Núm Páginas: {{libro.numero_paginas}}</p>
+          <p>Autor {{autor}}</p>
+          <p>Categoria {{categoria}}</p>
         </ion-card-content>
       </ion-card>
       <ion-row>
         <ion-col></ion-col>
-        <ion-col><ion-button color="dark">Agregar</ion-button></ion-col>
-        <ion-col><ion-button color="medium">Cancelar</ion-button></ion-col>
+        <ion-col><ion-button (click)="agregar_libro()" color="dark">Agregar</ion-button></ion-col>
+        <ion-col><ion-button (click)="cancelar()" color="medium">Cancelar</ion-button></ion-col>
         <ion-col></ion-col>
       </ion-row>
     </ion-row>
@@ -97,7 +99,10 @@
         <ion-col></ion-col>
       </ion-row>
       <ion-row>
-        <ion-button (click)="obtainBook()">Prueba</ion-button>
+        <ion-button (click)="obtainBook()">PruebaLibro</ion-button>
+      </ion-row>
+      <ion-row>
+        <ion-button (click)="prueba_ejemplar()">PruebaEjemplar</ion-button>
       </ion-row>
     </div>
   </ion-grid>

@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Privada Administrador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="2"><ion-button (click)="mi_cuenta()" color="medium"><ion-icon name="person-circle-outline"></ion-icon></ion-button></ion-col>
+      <ion-col size="3">
+        <ion-button color="dark" (click)="cerrar()">Cerrar Sesión</ion-button>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-button (click)="rol()">Obtener rol</ion-button>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
