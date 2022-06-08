@@ -135,7 +135,7 @@ class ApiPublicaController extends ResourceController
     public function rol(){
 
         //$policy_name = $this->request->header("jwt-policy")->getValue();
-        $token_data = json_decode($this->request->header("token-data")->getValue());
+        //$token_data = json_decode($this->request->header("token-data")->getValue());
 
         // Get current config for this controller request as object
         // $token_config = json_decode($this->request->header("token-config")->getValue());
@@ -152,10 +152,10 @@ class ApiPublicaController extends ResourceController
             'error' => false,
             'messages' => 'Test function ok',
             "data" => time(),
-            "dni_nie" => $token_data->dni_nie,
-            'correo_electronico'=>$token_data->correo_electronico,
-            'rol'=>$token_data->rol,
-            'nombre_rol'=> $token_data->nombre_rol
+            //"dni_nie" => $token_data->dni_nie,
+            //'correo_electronico'=>$token_data->correo_electronico,
+            'rol'=>'1' //$token_data->rol,
+            //'nombre_rol'=> $token_data->nombre_rol
         ];
         return $this->respond($response);
     }

@@ -16,7 +16,7 @@ class ApiUsuarioAdministradorController extends ResourceController
 
     public function gestion_responsable(){
 
-        $datos = $this->request->getVar();
+        
         $token_data = json_decode($this->request->header("token-data")->getValue());
 
         if ( $token_data->rol != 1 ){
@@ -184,12 +184,12 @@ class ApiUsuarioAdministradorController extends ResourceController
 
     public function mi_cuenta_administrador(){
 
-        $token_data = json_decode($this->request->header("token-data")->getValue());
-        if ( $token_data->rol == 1){
+        //$token_data = json_decode($this->request->header("token-data")->getValue());
+        //if ( $token_data->rol == 1){
 
             $model = new UsuariosModel();
             
-            $usuario = $model->obtener_usuario($token_data->dni_nie);// $datos['dni_nie']);
+            $usuario = $model->obtener_usuario('12345678G');//$token_data->dni_nie);
 
             $response = [
                 'status' => 200,
@@ -197,7 +197,7 @@ class ApiUsuarioAdministradorController extends ResourceController
                 'messages' => 'Tu datos de administrador',
                 'usuario' => $usuario
             ];
-        }
+        /*}
         else {
             $response = [
                 'status' => 500,
@@ -205,14 +205,14 @@ class ApiUsuarioAdministradorController extends ResourceController
                 'messages' => 'No eres administrador',
                 'data' => []
             ];
-        }
+        }*/
         return $this->respond($response);
     }
 
     public function mi_cuenta_administrador_post(){
      
-        $token_data = json_decode($this->request->header("token-data")->getValue());
-        $validationRules =
+        //$token_data = json_decode($this->request->header("token-data")->getValue());
+        /*$validationRules =
                 [
                     'dni_nie' => 'required',
                     'nombre' => 'required',
@@ -223,34 +223,59 @@ class ApiUsuarioAdministradorController extends ResourceController
                 ];
 
         if ( $this->validate($validationRules) ){
-            $model = new UsuariosModel();
-        
+        */    $model = new UsuariosModel();
             $datos = $this->request->getVar();
-            $data = [
-                'dni_nie'=> $datos['dni_nie'],
-                'nombre'=> $datos['nombre'],
-                'apellido1'=> $datos['apellido1'],
-                'apellido2'=> $datos['apellido2'],
-                'correo_electronico'=>$datos['correo_electronico']
-            ];
-            $model->actualizar_usuario($token_data->dni_nie,$data);
+            $usuario = $model->obtener_usuario($datos['dni_nie']);
 
-            $response = [
-                'status' => 200,
-                'error' => false,
-                'messages' => 'Usuario administrador actualizado',
-                'data' => [
-                    "data" => time(),
-                    "dni_nie" => $token_data->dni_nie,
-                    'correo_electronico'=>$token_data->correo_electronico,
-                    'rol'=>$token_data->rol,
-                    'datos'=>$datos
+            if ( $datos['contrasena'] == '' && $datos['nueva_contrasena'] == '' ){
+
+                $data = [
+                    'dni_nie'=> $datos['dni_nie'],
+                    'nombre'=> $datos['nombre'],
+                    'apellido1'=> $datos['apellido1'],
+                    'apellido2'=> $datos['apellido2'],
+                    'correo_electronico'=>$datos['correo_electronico']
+                ];
+                $model->actualizar_usuario($datos['dni_nie'],$data);
+
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Usuario administrador actualizado',
+                    'data' => []
+                ];
+                return $this->respond($response);
+            }
+            elseif ( $datos['contrasena'] != '' && $datos['nueva_contrasena'] != '' ){
+                if ( password_verify($datos['contrasena'],$usuario['contrasena']) ){
+                    $data = [
+                        'dni_nie'=> $datos['dni_nie'],
+                        'nombre'=> $datos['nombre'],
+                        'apellido1'=> $datos['apellido1'],
+                        'apellido2'=> $datos['apellido2'],
+                        'correo_electronico'=>$datos['correo_electronico'],
+                        'contrasena' => password_hash($datos['nueva_contrasena'],PASSWORD_DEFAULT)
+                    ];
+                    $model->actualizar_usuario($datos['dni_nie'],$data);
     
-                    //"token-email" => $token_data->email,
-                ]
-            ];
-            return $this->respond($response);
-        }
+                    $response = [
+                        'status' => 200,
+                        'error' => false,
+                        'messages' => 'Usuario administrador actualizado',
+                        'data' => []
+                    ];
+                    return $this->respond($response);
+                }else {    
+                    $response = [
+                        'status' => 500,
+                        'error' => false,
+                        'messages' => 'Contraseña incorrecta para cambiar',
+                        'data' => []
+                    ];
+                    return $this->respond($response);
+                }
+            }
+        /*}
         else{
             $response = [
                 'status' => 500,
@@ -259,7 +284,7 @@ class ApiUsuarioAdministradorController extends ResourceController
                 'data' => []
             ];
             return $this->respond($response);
-        }
+        }*/
     }
 
     /**

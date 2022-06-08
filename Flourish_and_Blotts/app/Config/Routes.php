@@ -232,8 +232,11 @@ $routes->group("api", function ($routes) {
     $routes->options("iniciar_sesion", "ApiPublicaController::iniciar_sesion");
     $routes->post("iniciar_sesion", "ApiPublicaController::iniciar_sesion");
 
-    $routes->options('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
-    $routes->get('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
+
+    $routes->options('rol', 'ApiPublicaController::rol');
+    $routes->get('rol', 'ApiPublicaController::rol');
+    //$routes->options('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
+    //$routes->get('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
 
         $routes->group("usuarios", function ($routes) {
         
@@ -249,7 +252,7 @@ $routes->group("api", function ($routes) {
                 $routes->options('activar_desactivar',"ApiUsuarioAdministradorController::activar_desactivar");
                 $routes->get('activar_desactivar',"ApiUsuarioAdministradorController::activar_desactivar");
 
-                $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador_post");
+                $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador");
                 $routes->get('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador");
 
                 $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador_post");
@@ -258,7 +261,8 @@ $routes->group("api", function ($routes) {
             });
         
             //ACCIONES DEL RESPONSABLE
-            $routes->group('privado/2',['filter'=>'jwt'],function($routes){
+            //$routes->group('privado/2',['filter'=>'jwt'],function($routes){
+            $routes->group('privado/2',function($routes){
                 
                 $routes->options('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca");
                 $routes->get('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca");
