@@ -39,14 +39,6 @@
                                                         <?php if ( $reserva->fecha_busqueda_res != null ){ ?> <td><input type="submit" class="btn btn-dark disabled" value="<?= $reserva->estado_res ?>"></td> <?php } ?>
                                                         </tr>
                                                     <?php  } ?>
-                                                    <?php if ( $reserva->id_ejemplar > 9 && $reserva->fecha_busqueda == null ){ ?>
-                                                        <td><?= $reserva->isbn_13 ?></td>
-                                                        <td><?= $reserva->titulo ?></td>
-                                                        <td><?= $reserva->correo_electronico ?></td>
-                                                        <td><input type="date" id="fecha_busqueda" name="fecha_busqueda" class="form-control"></td>
-                                                        <?php if ( $reserva->fecha_busqueda == null ){ ?> <td><input type="submit" class="btn btn-light" value="Aceptar"></td> </tr> <?php } ?> 
-                                                        <?php if ( $reserva->fecha_busqueda != null ){ ?> <td><input type="submit" class="btn btn-light disabled" value="Aceptar"></td> </tr> <?php } ?>
-                                                    <?php } ?>
                                             <?php } ?>
                                             <?php if ( $reserva->fecha_busqueda_res != null ) { ?>
                                                 <tr>

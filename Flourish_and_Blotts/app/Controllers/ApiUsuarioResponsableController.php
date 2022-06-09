@@ -9,6 +9,9 @@ use App\Models\EjemplaresModel;
 use App\Models\LibroAutorModel;
 use App\Models\LibroCategoriaModel;
 use App\Models\LibrosModel;
+use App\Models\PenalizacionesModel;
+use App\Models\PrestamosModel;
+use App\Models\RegresosModel;
 use App\Models\ReservasModel;
 use App\Models\RolesModel;
 use App\Models\UsuariosModel;
@@ -608,24 +611,16 @@ class ApiUsuarioResponsableController extends ResourceController
     public function reservas(){
 
         $token_data = json_decode($this->request->header("token-data")->getValue());
-        if ( $token_data->rol == 2 ){
             
             $model_reserva = new ReservasModel();
+            $reservas = $model_reserva->obtener_reservas()->getResult();
 
             $response = [
                 'status' => 200,
                 'error' => false,
                 'messages' => 'Datos usuario',
-                'reservas' => $model_reserva->obtener_reservas()->getResult()
+                'reservas' => $reservas
             ];
-        }
-        else{
-            $response = [
-                'status' => 500,
-                'error' => false,
-                'messages' => 'No eres responsable',
-            ];
-        }
         return $this->respond($response);
     }
 
@@ -633,33 +628,37 @@ class ApiUsuarioResponsableController extends ResourceController
 
         $token_data = json_decode($this->request->header("token-data")->getValue());
         $datos = $this->request->getVar();
-        if ( $token_data->rol == 2 && $datos != null){
+        if ( $token_data->rol == 2 ){
             
             $model = new ReservasModel();
-            $fecha_devolucion = date_create($datos['fecha_busqueda']);
-            date_add($fecha_devolucion, date_interval_create_from_date_string("15 days"));
-            $fecha_devolucion = date_format($fecha_devolucion,"Y-m-d");
+            $model_prestamo = new PrestamosModel();
 
+            $fecha_entrega_libro = date('Y-m-d');
+            $fecha_devolucion = $fecha_entrega_libro;
+            $fecha_devolucion= date("Y-m-d",strtotime($fecha_devolucion."+ 15 days")); 
+            $id_reserva = $model->obtener_id_reserva($datos->id_ejemplar)->getResult();
+            
             $data = [
-                'fecha_busqueda_res' => $datos['fecha_busqueda'],
-                'estado_res' => 'reservado'
+                'fecha_busqueda_res' => $fecha_entrega_libro,
+                'fecha_devolucion_res'=>$fecha_devolucion,
+                'fecha_entrega_libro'=>$fecha_entrega_libro,
+                'estado_res' => 'en curso'
             ];
-            $reserva = $model->where('id_reserva',$datos['id_reserva'])->first();
-            if ( $reserva['fec_busqueda_res'] == null ) {
-                $model->actualizar_reserva($datos['id_reserva'],$data); 
-                $response = [
-                    'status' => 200,
-                    'error' => false,
-                    'messages' => 'Libro reservado + fecha de busqueda',
-                ];
-            }
-            else{
-                $response = [
-                    'status' => 500,
-                    'error' => true,
-                    'messages' => 'Este libro ya estaba reservado',
-                ];
-            }
+            $model->actualizar_reserva($id_reserva[0]->id_reserva,$data);
+            
+            $data = [
+                'id_ejemplar'=>$datos->id_ejemplar,
+                'dni_nie'=>$token_data->dni_nie,
+                'fecha_inicio_pre'=>$fecha_entrega_libro,
+                'fecha_devolucion_pre'=>$fecha_devolucion,
+            ];
+            $model_prestamo->insertar_prestamo($data);
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Libro recogido reservado',
+            ];
         }
         else{
             $response = [
@@ -670,6 +669,84 @@ class ApiUsuarioResponsableController extends ResourceController
         }
         return $this->respond($response);
     }
+
+    public function devolver(){
+        
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        $datos = $this->request->getVar();
+        if ( $token_data->rol == 2 ){
+            
+            $model = new RegresosModel();
+            $model_prestamo = new PrestamosModel();
+            $model_penalizacion = new PenalizacionesModel();
+            $model_usuario = new UsuariosModel();
+            $model_ejemplares = new EjemplaresModel();
+            $model_reservas = new ReservasModel();
+
+            $fecha_devolucion = date('Y-m-d');
+            $fec_fin_penalizacion= date("Y-m-d",strtotime($fecha_devolucion."+ 15 days")); 
+            $prestamo = $model_prestamo->prestamo_devuelto($datos->id_ejemplar,$token_data->dni_nie)->getResult()[0];
+            $id_prestamo = $prestamo->id_prestamo;
+            $fecha_devolucion_prestamo = $prestamo->fecha_devolucion_pre;
+
+            if ( $fecha_devolucion_prestamo < $fecha_devolucion ){
+                //PENALIZAR
+                $data = [
+                    'id_prestamo'=> $id_prestamo,
+                    'fecha_inicio_penalizacion'=> $fecha_devolucion,
+                    'motivo' => 'Se ha retrasado en devolver el libro',
+                    'dias_penalizacion' => '15'
+                ];
+                $model_penalizacion->insert($data);
+    
+                $penalizacion=  $model_penalizacion->obtener_penalizacion($id_prestamo);
+                $data = [
+                    'id_penalizacion' => $penalizacion['id_prestamo']
+                ];
+                $model_usuario->actualizar_usuario($prestamo->dni_nie,$data);
+
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Has sido penalizado',
+                ];
+                return $this->respond($response);
+            }
+            $data = [
+                'estado_eje' => 'disponible'
+            ];
+            $model_ejemplares->update($datos->id_ejemplar,$data);
+    
+            $id_reserva = $model_reservas->obtener_id_reserva_devolver($datos->id_ejemplar)->getResult();
+            $data = [
+                'estado_res' => 'finalizado'
+            ];
+            $model_reservas->update($id_reserva[0]->id_reserva,$data);
+    
+            $data = [
+                'dni_nie' => $token_data->dni_nie,
+                'id_ejemplar' => $datos->id_ejemplar,
+                'fecha_devolucion'=>$fecha_devolucion
+            ];
+            $model->insert($data);
+
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Reserva finalizada',
+                'fec_fin_penalizacion' => $fec_fin_penalizacion
+            ];
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => false,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
+
+    }
+
     /**
      * Return a new resource object, with default properties
      *

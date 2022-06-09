@@ -229,7 +229,9 @@ class ApiPublicaController extends ResourceController
                 'error' => false,
                 'messages' => 'Has iniciado sesión',
                 'token' => $token,
-                'rol' => $nombre_rol['nombre_rol']
+                'rol' => $nombre_rol['nombre_rol'],
+                'id_rol' => $user['id_rol'],
+                'dni_nie' => $user['dni_nie']
             ];
             return $this->respondCreated($response);
             

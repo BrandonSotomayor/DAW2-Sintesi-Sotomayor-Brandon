@@ -111,14 +111,37 @@ class ReservasModel extends Model
         $builder = $db->table('reservas');
            
         $builder->select('*');
-        //$builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
-        //$builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
-        $query = $builder->get();//Where(['reservas.dni_nie'=>session()->get('dni_nie'),'reservas.estado_res'=>'finalizado']);
+        $query = $builder->get();
         foreach ( $query->getResult() as $row ){
-            echo 'a';
             $row->id_reserva;
         }
-        dd($query);
+        return $query;
+    }
+
+    public function obtener_id_reserva($id_ejemplar){
+        $db      = \Config\Database::connect();
+        $builder = $db->table('reservas');
+           
+        $builder->select('*');
+        $builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
+        //$builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
+        $query = $builder->getWhere(['reservas.id_ejemplar'=>$id_ejemplar,'reservas.estado_res'=>'espera']);
+        foreach ( $query->getResult() as $row ){
+            $row->id_reserva;
+        }
+        return $query;
+    }
+
+    public function obtener_id_reserva_devolver($id_ejemplar){
+        $db      = \Config\Database::connect();
+        $builder = $db->table('reservas');
+           
+        $builder->select('*');
+        $builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
+        $query = $builder->getWhere(['reservas.id_ejemplar'=>$id_ejemplar,'reservas.estado_res'=>'en curso']);
+        foreach ( $query->getResult() as $row ){
+            $row->id_reserva;
+        }
         return $query;
     }
 }

@@ -149,7 +149,7 @@ $routes->group("usuarios", function ($routes) {
 
         $routes->get('mi_cuenta',"UsuariosController::mi_cuenta");
 
-        $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_profesor_post");
+        $routes->post('mi_cuenta',"UsuariosController::mi_cuenta_estudiante_post");
 
         $routes->get('activar_desactivar',"UsuariosController::activar_desactivar");
 
@@ -199,7 +199,7 @@ $routes->group("usuarios", function ($routes) {
     });
 
 });
-http://localhost/api/usuarios/privado/1/mi_cuenta_administrador
+//http://localhost/api/usuarios/privado/1/mi_cuenta_administrador
 
 $routes->group("api", function ($routes) {
 
@@ -307,7 +307,8 @@ $routes->group("api", function ($routes) {
                 $routes->get('reservas',"ApiUsuarioResponsableController::reservas");
 
                 $routes->post('reserva_aceptada',"ApiUsuarioResponsableController::reserva_aceptada");
-        
+
+                $routes->post('devolver',"ApiUsuarioResponsableController::devolver");        
         
             });
 
@@ -352,110 +353,154 @@ $routes->group("api", function ($routes) {
                     $routes->options('reservas',"ApiUsuarioResponsableController::reservas");
     
                     $routes->options('reserva_aceptada',"ApiUsuarioResponsableController::reserva_aceptada");
+
+                    $routes->options('devolver',"ApiUsuarioResponsableController::devolver");
                 });
         
             //PROFESOR
             $routes->group('privado/3',['filter'=>'jwt'],function($routes){
         
-                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
                 $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
-                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
                 $routes->post('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
         
-                $routes->options('catalogo',"ApiUsuarioController::catalogo");
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->options('reservar',"ApiUsuarioController::reservar");
                 $routes->get('reservar',"ApiUsuarioController::reservar");
 
-                $routes->options('recogido',"ApiUsuarioController::recogido");
                 $routes->get('recogido',"ApiUsuarioController::recogido");
                 
-                $routes->options('devolver',"ApiUsuarioController::devolver");
                 $routes->get('devolver',"ApiUsuarioController::devolver");
 
-                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
                 $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
         
-                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
                 $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
 
-                $routes->options('opinar',"ApiUsuarioController::opinar");
                 $routes->post('opinar',"ApiUsuarioController::opinar");
 
-                $routes->options('opiniones',"ApiUsuarioController::opiniones");
                 $routes->get('opiniones',"ApiUsuarioController::opiniones");
+        
+            });
+
+            $routes->group('privado/3',function($routes){
+        
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
+        
+                $routes->options('catalogo',"ApiUsuarioController::catalogo");
+        
+                $routes->options('reservar',"ApiUsuarioController::reservar");
+
+                $routes->options('recogido',"ApiUsuarioController::recogido");
+                
+                $routes->options('devolver',"ApiUsuarioController::devolver");
+
+                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
+        
+                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+
+                $routes->options('opinar',"ApiUsuarioController::opinar");
+
+                $routes->options('opiniones',"ApiUsuarioController::opiniones");
         
             });
         
             //ESTUDIANTE
             $routes->group('privado/4',['filter'=>'jwt'],function($routes){
                 
-                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
                 $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
-                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
                 $routes->post('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
         
-                $routes->options('catalogo',"ApiUsuarioController::catalogo");
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->options('reservar',"ApiUsuarioController::reservar");
                 $routes->get('reservar',"ApiUsuarioController::reservar");
 
-                $routes->options('recogido',"ApiUsuarioController::recogido");
                 $routes->get('recogido',"ApiUsuarioController::recogido");
                 
-                $routes->options('devolver',"ApiUsuarioController::devolver");
                 $routes->get('devolver',"ApiUsuarioController::devolver");
 
-                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
                 $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
         
-                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
                 $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
 
-                $routes->options('opinar',"ApiUsuarioController::opinar");
                 $routes->post('opinar',"ApiUsuarioController::opinar");
 
-                $routes->options('opiniones',"ApiUsuarioController::opiniones");
                 $routes->get('opiniones',"ApiUsuarioController::opiniones");
+        
+            });
+
+            $routes->group('privado/4',function($routes){
+                
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
+        
+                $routes->options('catalogo',"ApiUsuarioController::catalogo");
+        
+                $routes->options('reservar',"ApiUsuarioController::reservar");
+
+                $routes->options('recogido',"ApiUsuarioController::recogido");
+                
+                $routes->options('devolver',"ApiUsuarioController::devolver");
+
+                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
+        
+                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+
+                $routes->options('opinar',"ApiUsuarioController::opinar");
+
+                $routes->options('opiniones',"ApiUsuarioController::opiniones");
         
             });
         
             //PAS
             $routes->group('privado/5',['filter'=>'jwt'],function($routes){
                 
-                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
                 $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
-                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
                 $routes->post('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
         
-                $routes->options('catalogo',"ApiUsuarioController::catalogo");
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->options('reservar',"ApiUsuarioController::reservar");
                 $routes->get('reservar',"ApiUsuarioController::reservar");
 
-                $routes->options('recogido',"ApiUsuarioController::recogido");
                 $routes->get('recogido',"ApiUsuarioController::recogido");
                 
-                $routes->options('devolver',"ApiUsuarioController::devolver");
                 $routes->get('devolver',"ApiUsuarioController::devolver");
 
-                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
                 $routes->get('historial_reservas',"ApiUsuarioController::historial_reservas");
         
-                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
                 $routes->get('formulario_opinion',"ApiUsuarioController::formulario_opinion");
 
-                $routes->options('opinar',"ApiUsuarioController::opinar");
                 $routes->post('opinar',"ApiUsuarioController::opinar");
+ 
+                $routes->get('opiniones',"ApiUsuarioController::opiniones");
+        
+            });
+
+            $routes->group('privado/5',function($routes){
+                
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
+
+                $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
+        
+                $routes->options('catalogo',"ApiUsuarioController::catalogo");
+        
+                $routes->options('reservar',"ApiUsuarioController::reservar");
+
+                $routes->options('recogido',"ApiUsuarioController::recogido");
+                
+                $routes->options('devolver',"ApiUsuarioController::devolver");
+
+                $routes->options('historial_reservas',"ApiUsuarioController::historial_reservas");
+        
+                $routes->options('formulario_opinion',"ApiUsuarioController::formulario_opinion");
+
+                $routes->options('opinar',"ApiUsuarioController::opinar");
 
                 $routes->options('opiniones',"ApiUsuarioController::opiniones");
-                $routes->get('opiniones',"ApiUsuarioController::opiniones");
         
             });
         

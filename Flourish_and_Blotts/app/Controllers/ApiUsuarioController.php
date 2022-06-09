@@ -46,28 +46,28 @@ class ApiUsuarioController extends ResourceController
 
         $token_data = json_decode($this->request->header("token-data")->getValue());
         $datos = $this->request->getVar();
-        if ( $token_data->rol == 3 && $datos != null ){
+        if ( $token_data->rol == 3 || $token_data->rol == 4 || $token_data->rol == 5 ){
             
             $model = new UsuariosModel();
             $model_profesor = new ProfesoresModel();
 
-            if ( $datos['nueva_contrasena'] == '' && $datos['contrasena'] == '' ){
+            if ( $datos->nueva_contrasena == '' && $datos->contrasena == '' ){
 
                 $data = [
-                    'dni_nie'=> $datos['dni_nie'],
-                    'nombre'=> $datos['nombre'],
-                    'apellido1'=> $datos['apellido1'],
-                    'apellido2'=> $datos['apellido2'],
-                    'correo_electronico'=>$datos['correo_electronico']
+                    'dni_nie'=> $datos->dni_nie,
+                    'nombre'=> $datos->nombre,
+                    'apellido1'=> $datos->apellido1,
+                    'apellido2'=> $datos->apellido2,
+                    'correo_electronico'=>$datos->correo_electronico
                 ];
-                $model->actualizar_usuario($datos['dni_nie'],$data);
+                $model->actualizar_usuario($datos->dni_nie,$data);
 
-                $data = [
+                /*$data = [
                     'tipo_profesor' => $datos['tipos'],
                     'nombre_familia_profesional' => $datos['familias_profesionales']
                 ];
                 $model_profesor->actualizar_profesor($datos['dni_nie'],$data);
-                
+                */
                 $response = [
                     'status' => 200,
                     'error' => false,
@@ -75,21 +75,23 @@ class ApiUsuarioController extends ResourceController
                 ];
                 
             }
-            elseif ( $datos['nueva_contrasena'] == '' ){
+            elseif ( $datos->nueva_contrasena == '' ){
 
                 $data = [
-                    'dni_nie'=> $datos['dni_nie'],
-                    'nombre'=> $datos['nombre'],
-                    'apellido1'=> $datos['apellido1'],
-                    'apellido2'=> $datos['apellido2'],
-                    'correo_electronico'=>$datos['correo_electronico']
+                    'dni_nie'=> $datos->dni_nie,
+                    'nombre'=> $datos->nombre,
+                    'apellido1'=> $datos->apellido1,
+                    'apellido2'=> $datos->apellido2,
+                    'correo_electronico'=>$datos->correo_electronico
                 ];
-                $model->actualizar_usuario($datos['id_usuario'],$data);
-                $data = [
+                $model->actualizar_usuario($datos->id_usuario,$data);
+                
+                /*$data = [
                     'tipo_profesor' => $datos['tipos'][0],
                     'nombre_familia_profesional' => $datos['familias_profesionales'][0]
                 ];
                 $model_profesor->actualizar_profesor($datos['id_usuario'],$data);
+                */
                 
                 $response = [
                     'status' => 200,
@@ -99,23 +101,24 @@ class ApiUsuarioController extends ResourceController
             }
             else {
             
-                $contrasena_antes = $model->obtener_contra(session()->get('id_usuario'));
-                if ( password_verify($datos['contrasena'],$contrasena_antes['contrasena']) ){
+                $contrasena_antes = $model->obtener_contra($datos->dni_nie);
+                if ( password_verify($datos->contrasena,$contrasena_antes['contrasena']) ){
                     $data = [
-                        'dni_nie'=> $datos['dni_nie'],
-                        'nombre'=> $datos['nombre'],
-                        'apellido1'=> $datos['apellido1'],
-                        'apellido2'=> $datos['apellido2'],
-                        'correo_electronico'=>$datos['correo_electronico'],
-                        'contrasena'=> password_hash($datos['nueva_contrasena'], PASSWORD_DEFAULT)
+                        'dni_nie'=> $datos->dni_nie,
+                        'nombre'=> $datos->nombre,
+                        'apellido1'=> $datos->apellido1,
+                        'apellido2'=> $datos->apellido2,
+                        'correo_electronico'=>$datos->correo_electronico,
+                        'contrasena'=> password_hash($datos->nueva_contrasena, PASSWORD_DEFAULT)
                     ];
-                    $model->actualizar_usuario($datos['id_usuario'],$data);
+                    $model->actualizar_usuario($datos->dni_nie,$data);
     
-                    $data = [
+                    /*$data = [
                         'tipo_profesor' => $datos['tipos'][0],
                         'nombre_familia_profesional' => $datos['familias_profesionales'][0]
                     ];
                     $model_profesor->actualizar_profesor($datos['id_usuario'],$data);
+                    */
                     
                     $response = [
                         'status' => 200,
@@ -290,7 +293,7 @@ class ApiUsuarioController extends ResourceController
                 $data = [
                     'id_penalizacion' => $penalizacion['id_prestamo']
                 ];
-                $model_usuario->actualizar_usuario($datos['id_usuario'],$data);
+                $model_usuario->actualizar_usuario($prestamo->dni_nie,$data);
 
                 $response = [
                     'status' => 200,

@@ -199,7 +199,7 @@ class LibrosController extends BaseController
         $fecha_devolucion = date('Y-m-d');
         $prestamo = $model_prestamo->prestamo_devuelto($datos['id_ejemplar'],session()->get('dni_nie'))->getResult()[0];
         $id_prestamo = $prestamo->id_prestamo;
-        $fecha_devolucion_prestamo = $prestamo->getResult()[0]->fecha_devolucion_pre;
+        $fecha_devolucion_prestamo = $prestamo->fecha_devolucion_pre;
         if ( $fecha_devolucion_prestamo < $fecha_devolucion ){
             //PENALIZAR
             $data = [
