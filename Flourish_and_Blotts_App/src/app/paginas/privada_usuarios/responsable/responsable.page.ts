@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
 import { BarcodescannerService } from 'src/app/servicios/barcodescanner.service';
 import { LibraryService } from 'src/app/servicios/library.service';
 import { LibrosService } from 'src/app/servicios/libros.service';
+import { PrivadaService } from 'src/app/servicios/privada.service';
 
 @Component({
   selector: 'app-responsable',
@@ -22,7 +23,7 @@ export class ResponsablePage implements OnInit {
   public datos_autor: string;
   public datos_categoria: string;
 
-  constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService, private _libroService: LibrosService) { 
+  constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService, private _libroService: LibrosService, private _privadaService: PrivadaService) { 
     this._bsService.configureScanner();
     if ( this._authService.isUserAuthenticated() ) {
       this._router.navigate(["paginas", this._authService.rol]);
@@ -76,6 +77,10 @@ export class ResponsablePage implements OnInit {
     }
   }
 
+  reserva_aceptada(){
+
+  }
+
   mi_cuenta(){
     this._router.navigate(['paginas','micuentaresponsable']);
   }
@@ -102,6 +107,21 @@ export class ResponsablePage implements OnInit {
 
     this._libroService.agregar_ejemplar_datos_post('9788401336560');
     
+  }
+
+  prueba_reserva_aceptada(){
+    let id_ejemplar = '19';
+    this._privadaService.reserva_aceptada_responsable_post(id_ejemplar);
+
+  }
+
+  prueba_regresar(){
+    let id_ejemplar = '19';
+    this._privadaService.devolver_responsable_post(id_ejemplar);
+  }
+
+  get reservas():any{
+    return this._privadaService.reservas;
   }
 
   cancelar(){

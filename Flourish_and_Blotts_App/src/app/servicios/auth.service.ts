@@ -9,16 +9,13 @@ export class AuthService {
   private BASE_URL: string = "http://localhost:80/api/";
   private _email: string = null;
   private _passwd: string = null;
-  private _rol:string = null;
 
   constructor(public _http: HttpClient) { }
 
   async login(email: string, passwd: string): Promise<boolean> {
     this._email = email;
     this._passwd = passwd;
-
-    /*La crida necessita els headers, en aquest cas, el 'Content-Type'.
-    També s'hi pot afegir el header 'Accept'*/
+    
     let options: any = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
@@ -39,7 +36,14 @@ export class AuthService {
                 (response: any) => {
                     if(response.status == 200) {
                         //Si tot va bé, emmagatzemem el TOKEN al LS
-                        this._rol = response.rol;
+                        console.log(response);
+                        if ( response.rol == 'profesor' || response.rol == 'estudiante' || response.rol == 'pas' ){
+                          localStorage.setItem("ROL", 'usuario');
+                          localStorage.setItem("ID_ROL", response.id_rol);
+                        }else {
+                          localStorage.setItem("ROL", response.rol);
+                          localStorage.setItem("ID_ROL", response.id_rol);
+                        }
                         localStorage.setItem("TOKEN", response.token);
                         resolve(true);
                     }
@@ -71,6 +75,7 @@ export class AuthService {
     this._email = null;
     this._passwd = null;
     localStorage.removeItem("TOKEN");
+    localStorage.removeItem("ROL");
   }
   
   get token(): string {
@@ -82,8 +87,13 @@ export class AuthService {
   }
 
   get rol():string{
-    return this._rol;
+    return localStorage.getItem("ROL");
   }
+
+  get id_rol():string{
+    return localStorage.getItem("ID_ROL");
+  }
+  
   
   /*Per ajudar-vos durant el desenvolupament i per tal que pugueu ser més àgils programant,
         podeu comentar la comprovació de les credencials. En el codi final, aquesta comprovació 

@@ -21,6 +21,10 @@ export class UsuarioPage implements OnInit {
 
   constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService) { 
     this._bsService.configureScanner();
+    if ( this._authService.isUserAuthenticated() ) {
+      this._router.navigate(["paginas", this._authService.rol]);
+    }
+    else this._router.navigate(["paginas",'iniciarsesion']);
   }
 
   async startScanner(){
@@ -49,7 +53,7 @@ export class UsuarioPage implements OnInit {
   }
 
   mi_cuenta(){
-
+    this._router.navigate(['paginas','micuentausuario']);
   }
 
   cerrar_sesion(){

@@ -72,6 +72,10 @@ const routes: Routes = [
     path: 'micuentaresponsable',
     loadChildren: () => import('./privada_usuarios/micuentaresponsable/micuentaresponsable.module').then( m => m.MicuentaresponsablePageModule)
   },
+  {
+    path: 'micuentausuario',
+    loadChildren: () => import('./privada_usuarios/micuentausuario/micuentausuario.module').then( m => m.MicuentausuarioPageModule)
+  },
 ];
 
 @NgModule({

@@ -17,57 +17,58 @@
       <ion-col size="1"></ion-col>
     </ion-row>
     <ion-row>
-      <ion-col></ion-col>
       <ion-col>
-        <h2>Funcionalidades</h2>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col>
+            <h2>Gestión</h2>
+          </ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col size="9">
+            <ion-item>
+              <ion-button (click)="reserva_aceptada()" color="dark">Reservas</ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-button color="dark">Regresos</ion-button>
+            </ion-item>
+          </ion-col>
+          <ion-col></ion-col>
+        </ion-row>
       </ion-col>
-      <ion-col></ion-col>
+      <ion-col>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col>
+            <h2>Funciones</h2>
+          </ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col size="7">
+            <ion-item>
+              <h5>Libro</h5>
+            </ion-item>
+            <ion-item>
+              <ion-button (click)="startScanner()" color="dark">+<ion-icon name="book-outline"></ion-icon></ion-button>
+            </ion-item>
+            <ion-item>
+              <h5>Ejemplar</h5>
+            </ion-item>
+            <ion-item>
+              <ion-button (click)="startScannerEjemplar()" color="dark">+<ion-icon name="albums-outline"></ion-icon></ion-button>
+            </ion-item>
+          </ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+      </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-        <ion-item>
-          <h5>Libro</h5>
-        </ion-item>
-        <ion-item>
-          <ion-button (click)="startScanner()" color="dark">+<ion-icon name="book-outline"></ion-icon></ion-button>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <h5>Ejemplar</h5>
-        </ion-item>
-        <ion-item>
-          <ion-button (click)="startScannerEjemplar()" color="dark">+<ion-icon name="albums-outline"></ion-icon></ion-button>
-        </ion-item>
-      </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col>
-        <h2>Gestión</h2>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-button color="dark">Reservas</ion-button>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-button color="dark">Prestamos</ion-button>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-button color="dark">Regresos</ion-button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      
-    </ion-row>
+
     <ion-row *ngIf="nuevo_libro">
       <ion-card>
         <ion-card-header>
@@ -88,21 +89,44 @@
         <ion-col></ion-col>
       </ion-row>
     </ion-row>
-    
 
-    <div ><!--*ngIf=""-->
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col><h2>Reservas</h2></ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <div *ngFor="let reserva of reservas">
       <ion-row>
         <ion-col></ion-col>
-        <ion-col>
-          <h2>Reservas</h2>
+        <ion-col size="7">
+          <ion-row>
+            <ion-item><b>QR:</b> {{reserva.isbn_13}}-{{reserva.id_ejemplar}}</ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item><b>DNI/NIE:</b> {{reserva.dni_nie}}</ion-item>
+          </ion-row>
+          <ion-row>
+            <ion-item><b>Estado:</b> {{reserva.estado_res}}</ion-item>
+          </ion-row>
         </ion-col>
         <ion-col></ion-col>
       </ion-row>
+    </div>
+
+    
+
+    <div >
       <ion-row>
-        <ion-button (click)="obtainBook()">PruebaLibro</ion-button>
+        <ion-button (click)="obtainBook()">PruebaAgregarLibro</ion-button>
       </ion-row>
       <ion-row>
-        <ion-button (click)="prueba_ejemplar()">PruebaEjemplar</ion-button>
+        <ion-button (click)="prueba_ejemplar()">PruebaAgregarEjemplar</ion-button>
+      </ion-row>
+      <ion-row>
+        <ion-button (click)="prueba_reserva_aceptada()">PruebaReserva</ion-button>
+      </ion-row>
+      <ion-row>
+        <ion-button (click)="prueba_regresar()">PruebaRegresar</ion-button>
       </ion-row>
     </div>
   </ion-grid>

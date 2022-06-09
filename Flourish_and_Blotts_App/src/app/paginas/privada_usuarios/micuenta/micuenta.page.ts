@@ -21,7 +21,7 @@ export class MicuentaPage implements OnInit {
 
   constructor(private _router: Router, private _privadaService: PrivadaService, private _authService: AuthService) { 
     if ( this._authService.isUserAuthenticated() ) {
-      this._router.navigate(["paginas", this._authService.rol]);
+      this._router.navigate(["paginas", 'micuenta']);
     }
     else this._router.navigate(["paginas",'iniciarsesion']);
    }
