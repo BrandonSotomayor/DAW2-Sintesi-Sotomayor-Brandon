@@ -11,19 +11,13 @@ export class LibrosService {
 
   constructor(public _http: HttpClient, private _authService: AuthService) { }
 
-  agregar_libro_datos_post(libro_datos:any,autor_datos:string, categoria_datos:string):void{
-    /*this.dni_nie = dni_nie;
-    this.nombre=nombre;
-    this.apellido1=apellido1;
-    this.correo_electronico=correo_electronico;
-    this.contrasena=contrasena;
-    this.nueva_contrasena=nueva_contrasena;
-*/
-  /*  let options: any = {
+  agregar_libro_datos_post(libro_datos:any,autor_datos:string, categoria_datos:string):void{ 
+
+    let options: any = {
       headers: new HttpHeaders()
-      //.set('Accept','application/json')
+      .set('Accept','application/json')
       .set('Content-Type', 'application/json',)
-      //.set('Authorization', 'Bearer: '+ this._authService.token)
+      .set('Authorization', 'Bearer '+ this._authService.token)
     }
     const data: any = {
       'isbn_13': libro_datos.isbn_13,
@@ -43,11 +37,11 @@ export class LibrosService {
     new Promise(
       (resolve, reject) => {
           //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-          this._http.post(this.BASE_URL + "usuarios/privado/2/agregar_libro", options, data).subscribe(
+          this._http.post(this.BASE_URL + "usuarios/privado/2/agregar_libro", data, options).subscribe(
               (response: any) => {
 
                   if(response.status == 200) {
-                      console.log('usuario actualizado');
+                    this._authService.token = response.refreshToken;
                   }
                   else {
                     console.log(response);
@@ -59,10 +53,44 @@ export class LibrosService {
               }
           );
       }
-    );*/
+    );
   }
 
-  agregar_ejemplar_datos_post(isbn_13:string):void{
+  agregar_ejemplar_datos_post(isbn_13:string):void{ 
+
+    let options: any = {
+      headers: new HttpHeaders()
+      .set('Accept','application/json')
+      .set('Content-Type', 'application/json',)
+      .set('Authorization', 'Bearer '+ this._authService.token)
+    }
+    const data: any = {
+      'isbn_13': isbn_13, 
+    }
+
+    new Promise(
+      (resolve, reject) => {
+          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
+          this._http.post(this.BASE_URL + "usuarios/privado/2/agregar_ejemplar", data, options).subscribe(
+              (response: any) => {
+
+                  if(response.status == 200) {
+                    this._authService.token = response.refreshToken;
+                  }
+                  else {
+                    console.log(response);
+                    resolve(false);
+                  }
+              },
+              (error: any) => {
+                  reject("Error");
+              }
+          );
+      }
+    );
+  }
+
+  aggar_ejemplar_datos_post(isbn_13:string):void{
     /*this.dni_nie = dni_nie;
     this.nombre=nombre;
     this.apellido1=apellido1;

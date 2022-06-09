@@ -31,11 +31,14 @@ export class IniciarsesionPage implements OnInit {
     try {
         const response = await this._authService.login(this.correo_electronico, this.contrasena);
         if(response) {
-            this._router.navigate(["paginas",'administrador']);
+            this._router.navigate(["paginas", this._authService.rol]);
         }
     } catch(error) {
         console.log("Error!");
     }
+  }
+  cancelar(){
+    this._router.navigate(['paginas','home']);
   }
 
   ngOnInit() {

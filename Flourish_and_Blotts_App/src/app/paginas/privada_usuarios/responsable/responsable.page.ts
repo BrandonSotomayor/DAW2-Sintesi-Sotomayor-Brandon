@@ -24,6 +24,10 @@ export class ResponsablePage implements OnInit {
 
   constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService, private _libroService: LibrosService) { 
     this._bsService.configureScanner();
+    if ( this._authService.isUserAuthenticated() ) {
+      this._router.navigate(["paginas", this._authService.rol]);
+    }
+    else this._router.navigate(["paginas",'iniciarsesion']);
   }
 
   async startScanner(){
@@ -73,7 +77,7 @@ export class ResponsablePage implements OnInit {
   }
 
   mi_cuenta(){
-
+    this._router.navigate(['paginas','micuentaresponsable']);
   }
 
   cerrar_sesion(){
@@ -88,12 +92,16 @@ export class ResponsablePage implements OnInit {
     this._libraryService.seach(code[this.post%4]);
     this.post += 1;
   }
-  prueba_ejemplar(){
-
-  }
 
   agregar_libro(){
     this._libroService.agregar_libro_datos_post(this.datos_libro, this.datos_autor, this.datos_categoria);
+    this.nuevo_libro = false;
+  }
+
+  prueba_ejemplar(){
+
+    this._libroService.agregar_ejemplar_datos_post('9788401336560');
+    
   }
 
   cancelar(){

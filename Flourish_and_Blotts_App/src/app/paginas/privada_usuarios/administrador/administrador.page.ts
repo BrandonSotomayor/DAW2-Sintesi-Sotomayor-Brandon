@@ -12,18 +12,18 @@ export class AdministradorPage implements OnInit {
 
   constructor(private _router: Router, private _authService: AuthService, private _privadaService: PrivadaService) {
     if ( this._authService.isUserAuthenticated() ) {
-      this._router.navigate(["paginas",'privada-administrador']);
+      this._router.navigate(["paginas", this._authService.rol]);
     }
     else this._router.navigate(["paginas",'iniciarsesion']);
+
+  }
+
+  get responsables():any{
+    return this._privadaService.responsables;
   }
 
   mi_cuenta(){
-    this._privadaService.mi_cuenta_datos();
     this._router.navigate(['paginas','micuenta']);
-  }
-
-  rol(){
-    this._authService.rol();
   }
 
   cerrar(){

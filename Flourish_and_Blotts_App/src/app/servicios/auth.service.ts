@@ -9,6 +9,7 @@ export class AuthService {
   private BASE_URL: string = "http://localhost:80/api/";
   private _email: string = null;
   private _passwd: string = null;
+  private _rol:string = null;
 
   constructor(public _http: HttpClient) { }
 
@@ -38,13 +39,12 @@ export class AuthService {
                 (response: any) => {
                     if(response.status == 200) {
                         //Si tot va bé, emmagatzemem el TOKEN al LS
+                        this._rol = response.rol;
                         localStorage.setItem("TOKEN", response.token);
                         resolve(true);
-                        console.log('entra login');
                     }
                     else {
                       resolve(false);
-                      console.log('no inicia sesion');
                     }
                 },
                 (error: any) => {
@@ -71,7 +71,6 @@ export class AuthService {
     this._email = null;
     this._passwd = null;
     localStorage.removeItem("TOKEN");
-    console.log('cerrado');
   }
   
   get token(): string {
@@ -79,8 +78,11 @@ export class AuthService {
   }
   
   set token(token: string) {
-    console.log(token);
     localStorage.setItem("TOKEN", token);
+  }
+
+  get rol():string{
+    return this._rol;
   }
   
   /*Per ajudar-vos durant el desenvolupament i per tal que pugueu ser més àgils programant,
@@ -91,36 +93,5 @@ export class AuthService {
     return localStorage.getItem("TOKEN") != null;
 
     //return this._email != null && this._passwd != null && localStorage.getItem("TOKEN") != null;
-  }
-
-  rol():void{
-    let options: any = {
-      headers: new HttpHeaders()
-      .set('Accept','application/json')
-      .set('Content-Type', 'application/json',)
-      .set('Authorization', 'Bearer: '+ this.token)
-    }
-
-    new Promise(
-      (resolve, reject) => {
-          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-          this._http.get(this.BASE_URL + "rol", options).subscribe(
-              (response: any) => {
-                  if(response.status == 200) {
-                      console.log(response);
-                      //Si tot va bé, emmagatzemem el TOKEN al LS
-                      //localStorage.setItem("TOKEN", response.token);
-                      //resolve(true);
-                  }
-                  else {
-                    resolve(false);
-                  }
-              },
-              (error: any) => {
-                  reject("Error");
-              }
-          );
-      }
-    );
   }
 }

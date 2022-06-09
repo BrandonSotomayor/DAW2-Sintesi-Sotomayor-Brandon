@@ -9,6 +9,8 @@ export class PrivadaService {
 
   private BASE_URL: string = "http://localhost:80/api/";
 
+  private responsables_get;
+
   private dni_nie :string = null;
   private nombre: string = null;
   private apellido1 : string = null;
@@ -20,55 +22,25 @@ export class PrivadaService {
   private cuenta_usuario;
 
   constructor(public _http: HttpClient, private _authService: AuthService) {
-    this.mi_cuenta_datos();
+    //this.mi_cuenta_datos();
+    this.gestion_responsable_get();
    }
 
-  rol():void{
+   gestion_responsable_get():void{
     let options: any = {
       headers: new HttpHeaders()
       .set('Accept','application/json')
       .set('Content-Type', 'application/json',)
-      //.set('Authorization', 'Bearer: '+ this._authService.token)
+      .set('Authorization', 'Bearer '+ this._authService.token)
     }
 
     new Promise(
       (resolve, reject) => {
-          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-          this._http.get(this.BASE_URL + "rol", options).subscribe(
+          this._http.get(this.BASE_URL + "usuarios/privado/1/gestion_responsable", options).subscribe(
               (response: any) => {
                   if(response.status == 200) {
-                      console.log(response);
-                      //Si tot va bé, emmagatzemem el TOKEN al LS
-                      //localStorage.setItem("TOKEN", response.token);
-                      //resolve(true);
-                  }
-                  else {
-                    resolve(false);
-                  }
-              },
-              (error: any) => {
-                  reject("Error");
-              }
-          );
-      }
-    );
-  }
-
-  mi_cuenta_datos():void{
-    let options: any = {
-      headers: new HttpHeaders()
-      .set('Accept','application/json')
-      .set('Content-Type', 'application/json',)
-      //.set('Authorization', 'Bearer: '+ this._authService.token)
-    }
-
-    new Promise(
-      (resolve, reject) => {
-          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-          this._http.get(this.BASE_URL + "usuarios/privado/1/mi_cuenta_administrador", options).subscribe(
-              (response: any) => {
-                  if(response.status == 200) {
-                      this.cuenta_usuario = response.usuario;
+                    this.responsables_get = response.usuarios;
+                    this._authService.token = response.refreshToken; 
                   }
                   else {
                     resolve(false);
@@ -83,41 +55,31 @@ export class PrivadaService {
   }
 
   mi_cuenta_datos_post(dni_nie:string,nombre:string,apellido1:string,apellido2:string,correo_electronico:string,contrasena:string, nueva_contrasena:string):void{
-    this.dni_nie = dni_nie;
-    this.nombre=nombre;
-    this.apellido1=apellido1;
-    this.correo_electronico=correo_electronico;
-    this.contrasena=contrasena;
-    this.nueva_contrasena=nueva_contrasena;
 
     let options: any = {
       headers: new HttpHeaders()
-      //.set('Accept','application/json')
+      .set('Accept','application/json')
       .set('Content-Type', 'application/json',)
-      //.set('Authorization', 'Bearer: '+ this._authService.token)
+      .set('Authorization', 'Bearer '+ this._authService.token)
     }
     const data: any = {
-      'dni_nie': this.dni_nie,
-      'nombre': this.nombre,
-      'apellido1': this.apellido1,
-      'apellido2': this.apellido2,
-      'correo_electronico': this.correo_electronico,
-      'contrasena':  this.contrasena,
-      'nueva_contrasena': this.nueva_contrasena
+      "dni_nie": dni_nie,
+      "nombre": nombre,
+      "apellido1": apellido1,
+      "apellido2": apellido2,
+      "correo_electronico": correo_electronico,
+      "contrasena":  contrasena,
+      "nueva_contrasena": nueva_contrasena
     }
-    console.log(data); 
 
     new Promise(
       (resolve, reject) => {
-          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-          this._http.post(this.BASE_URL + "usuarios/privado/1/mi_cuenta_administrador", options, data).subscribe(
+          this._http.post(this.BASE_URL + "usuarios/privado/1/mi_cuenta_administrador", data, options).subscribe(
               (response: any) => {
-
                   if(response.status == 200) {
-                      console.log('usuario actualizado');
+                    this._authService.token = response.refreshToken; 
                   }
                   else {
-                    console.log(response);
                     resolve(false);
                   }
               },
@@ -129,7 +91,46 @@ export class PrivadaService {
     );
   }
 
+  mi_cuenta_responsable_post(dni_nie:string,nombre:string,apellido1:string,apellido2:string,correo_electronico:string,contrasena:string, nueva_contrasena:string):void{
 
+    let options: any = {
+      headers: new HttpHeaders()
+      .set('Accept','application/json')
+      .set('Content-Type', 'application/json',)
+      .set('Authorization', 'Bearer '+ this._authService.token)
+    }
+    const data: any = {
+      "dni_nie": dni_nie,
+      "nombre": nombre,
+      "apellido1": apellido1,
+      "apellido2": apellido2,
+      "correo_electronico": correo_electronico,
+      "contrasena":  contrasena,
+      "nueva_contrasena": nueva_contrasena
+    }
+
+    new Promise(
+      (resolve, reject) => {
+          this._http.post(this.BASE_URL + "usuarios/privado/2/mi_cuenta", data, options).subscribe(
+              (response: any) => {
+                  if(response.status == 200) {
+                    this._authService.token = response.refreshToken; 
+                  }
+                  else {
+                    resolve(false);
+                  }
+              },
+              (error: any) => {
+                  reject("Error");
+              }
+          );
+      }
+    );
+  }
+
+  get responsables():any{
+    return this.responsables_get;
+  } 
 
   get mi_cuenta():any{
     return this.cuenta_usuario;

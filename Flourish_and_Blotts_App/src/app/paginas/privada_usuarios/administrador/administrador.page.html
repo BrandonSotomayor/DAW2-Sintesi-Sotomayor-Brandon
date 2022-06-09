@@ -16,10 +16,22 @@
       <ion-col size="3">
         <ion-button color="dark" (click)="cerrar()">Cerrar Sesión</ion-button>
       </ion-col>
-      <ion-col size="1"></ion-col>
+      <ion-col size="2"></ion-col>
     </ion-row>
     <ion-row>
-      <ion-button (click)="rol()">Obtener rol</ion-button>
+      <ion-col size="2"></ion-col>
+      <ion-col><h2>Gestion Responsables</h2></ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let responsable of responsables" style="margin-bottom: 20px;">
+      <ion-col size="1"></ion-col>
+      <ion-col>
+        <ion-item>DNI/NIE: {{responsable.dni_nie}}</ion-item>
+        <ion-item>Nombre: {{responsable.nombre}}</ion-item>
+        <ion-item>Correo: {{responsable.correo_electronico}}</ion-item>
+        <ion-item>Estado: {{responsable.estado}}</ion-item>
+      </ion-col>
+      <ion-col size="1"></ion-col>
     </ion-row>
   </ion-grid>
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/servicios/auth.service';
 import { PrivadaService } from 'src/app/servicios/privada.service';
 
 @Component({
@@ -18,16 +19,20 @@ export class MicuentaPage implements OnInit {
   nueva_contrasena = '';
   public datos_usuario;
 
-  constructor(private router: Router, private _privadaService: PrivadaService) { 
-    this.datos_usuario = this._privadaService.mi_cuenta;
-  }
+  constructor(private _router: Router, private _privadaService: PrivadaService, private _authService: AuthService) { 
+    if ( this._authService.isUserAuthenticated() ) {
+      this._router.navigate(["paginas", this._authService.rol]);
+    }
+    else this._router.navigate(["paginas",'iniciarsesion']);
+   }
 
   actualizar(){
     this._privadaService.mi_cuenta_datos_post(this.dni_nie,this.nombre,this.apellido1,this.apellido2,this.correo_electronico,this.contrasena,this.nueva_contrasena);
+    this._router.navigate(['paginas','administrador']);
   }
 
   cancelar(){
-    this.router.navigate(['paginas','administrador']);
+    this._router.navigate(['paginas','administrador']);
   }
 
   ngOnInit() {
