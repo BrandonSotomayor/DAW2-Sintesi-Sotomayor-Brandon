@@ -184,8 +184,8 @@ class ApiUsuarioAdministradorController extends ResourceController
 
     public function mi_cuenta_administrador(){
 
-        //$token_data = json_decode($this->request->header("token-data")->getValue());
-        //if ( $token_data->rol == 1){
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        if ( $token_data->rol == 1){
 
             $model = new UsuariosModel();
             
@@ -197,7 +197,7 @@ class ApiUsuarioAdministradorController extends ResourceController
                 'messages' => 'Tu datos de administrador',
                 'usuario' => $usuario
             ];
-        /*}
+        }
         else {
             $response = [
                 'status' => 500,
@@ -205,13 +205,13 @@ class ApiUsuarioAdministradorController extends ResourceController
                 'messages' => 'No eres administrador',
                 'data' => []
             ];
-        }*/
+        }
         return $this->respond($response);
     }
 
     public function mi_cuenta_administrador_post(){
      
-        //$token_data = json_decode($this->request->header("token-data")->getValue());
+        $token_data = json_decode($this->request->header("token-data")->getValue());
         /*$validationRules =
                 [
                     'dni_nie' => 'required',
@@ -223,20 +223,20 @@ class ApiUsuarioAdministradorController extends ResourceController
                 ];
 
         if ( $this->validate($validationRules) ){
-        */    $model = new UsuariosModel();
+        */  $model = new UsuariosModel();
             $datos = $this->request->getVar();
-            $usuario = $model->obtener_usuario($datos['dni_nie']);
+            $usuario = $model->obtener_usuario($datos->dni_nie);
 
-            if ( $datos['contrasena'] == '' && $datos['nueva_contrasena'] == '' ){
+            if ( $datos->contrasena == '' && $datos->nueva_contrasena == '' ){
 
                 $data = [
-                    'dni_nie'=> $datos['dni_nie'],
-                    'nombre'=> $datos['nombre'],
-                    'apellido1'=> $datos['apellido1'],
-                    'apellido2'=> $datos['apellido2'],
-                    'correo_electronico'=>$datos['correo_electronico']
+                    'dni_nie'=> $datos->dni_nie,
+                    'nombre'=> $datos->nombre,
+                    'apellido1'=> $datos->apellido1,
+                    'apellido2'=> $datos->apellido2,
+                    'correo_electronico'=>$datos->correo_electronico
                 ];
-                $model->actualizar_usuario($datos['dni_nie'],$data);
+                $model->actualizar_usuario($datos->dni_nie,$data);
 
                 $response = [
                     'status' => 200,
@@ -246,17 +246,17 @@ class ApiUsuarioAdministradorController extends ResourceController
                 ];
                 return $this->respond($response);
             }
-            elseif ( $datos['contrasena'] != '' && $datos['nueva_contrasena'] != '' ){
-                if ( password_verify($datos['contrasena'],$usuario['contrasena']) ){
+            elseif ( $datos->contrasena != '' && $datos->nueva_contrasena != '' ){
+                if ( password_verify($datos->contrasena,$usuario['contrasena']) ){
                     $data = [
-                        'dni_nie'=> $datos['dni_nie'],
-                        'nombre'=> $datos['nombre'],
-                        'apellido1'=> $datos['apellido1'],
-                        'apellido2'=> $datos['apellido2'],
-                        'correo_electronico'=>$datos['correo_electronico'],
-                        'contrasena' => password_hash($datos['nueva_contrasena'],PASSWORD_DEFAULT)
+                        'dni_nie'=> $datos->dni_nie,
+                        'nombre'=> $datos->nombre,
+                        'apellido1'=> $datos->apellido1,
+                        'apellido2'=> $datos->apellido2,
+                        'correo_electronico'=>$datos->correo_electronico,
+                        'contrasena' => password_hash($datos->nueva_contrasena,PASSWORD_DEFAULT)
                     ];
-                    $model->actualizar_usuario($datos['dni_nie'],$data);
+                    $model->actualizar_usuario($datos->dni_nie,$data);
     
                     $response = [
                         'status' => 200,

@@ -199,7 +199,7 @@ $routes->group("usuarios", function ($routes) {
     });
 
 });
-
+http://localhost/api/usuarios/privado/1/mi_cuenta_administrador
 
 $routes->group("api", function ($routes) {
 
@@ -232,103 +232,127 @@ $routes->group("api", function ($routes) {
     $routes->options("iniciar_sesion", "ApiPublicaController::iniciar_sesion");
     $routes->post("iniciar_sesion", "ApiPublicaController::iniciar_sesion");
 
-
-    $routes->options('rol', 'ApiPublicaController::rol');
-    $routes->get('rol', 'ApiPublicaController::rol');
-    //$routes->options('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
-    //$routes->get('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
+    $routes->options('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
+    $routes->get('rol', 'ApiPublicaController::rol',['filter'=>'jwt']);
 
         $routes->group("usuarios", function ($routes) {
         
-            //$routes->group('privado/1',['filter'=>'jwt'],function($routes){
-            $routes->group('privado/1',function($routes){
+            $routes->group('privado/1',['filter'=>'jwt'],function($routes){
+            //$routes->group('privado/1',function($routes){
                 
-                $routes->options('gestion_responsable',"ApiUsuarioAdministradorController::gestion_responsable");
                 $routes->get('gestion_responsable',"ApiUsuarioAdministradorController::gestion_responsable");
-
-                $routes->options('agregar_responsable',"ApiUsuarioAdministradorController::agregar_responsable_post");
+                
                 $routes->get('agregar_responsable',"ApiUsuarioAdministradorController::agregar_responsable_post");
-
-                $routes->options('activar_desactivar',"ApiUsuarioAdministradorController::activar_desactivar");
+                
                 $routes->get('activar_desactivar',"ApiUsuarioAdministradorController::activar_desactivar");
 
-                $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador");
                 $routes->get('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador");
-
-                $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador_post");
+                
                 $routes->post('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador_post");
         
             });
+
+            $routes->group('privado/1',function($routes){
+                    
+                    $routes->options('gestion_responsable',"ApiUsuarioAdministradorController::gestion_responsable");
+    
+                    $routes->options('agregar_responsable',"ApiUsuarioAdministradorController::agregar_responsable_post");
+    
+                    $routes->options('activar_desactivar',"ApiUsuarioAdministradorController::activar_desactivar");
+    
+                    $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador");
+    
+                    $routes->options('mi_cuenta_administrador',"ApiUsuarioAdministradorController::mi_cuenta_administrador_post");
+            
+                });
         
             //ACCIONES DEL RESPONSABLE
-            //$routes->group('privado/2',['filter'=>'jwt'],function($routes){
-            $routes->group('privado/2',function($routes){
+            $routes->group('privado/2',['filter'=>'jwt'],function($routes){
                 
-                $routes->options('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca");
                 $routes->get('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca");
                 
-                $routes->options('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca_post");
                 $routes->post('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca_post");
         
                 //LIBROS
-                $routes->options('gestion_libros',"ApiUsuarioResponsableController::gestion_libros");
                 $routes->get('gestion_libros',"ApiUsuarioResponsableController::gestion_libros");
                 
-                $routes->options('agregar_libro',"ApiUsuarioResponsableController::agregar_libro_post");
                 $routes->post('agregar_libro',"ApiUsuarioResponsableController::agregar_libro_post");
                 
-                $routes->options('borrar_libro','ApiUsuarioResponsableController::borrar_libro');
                 $routes->get('borrar_libro','ApiUsuarioResponsableController::borrar_libro');
         
         
                 //EJEMPLARES
-                $routes->options('gestion_ejemplares',"ApiUsuarioResponsableController::gestion_ejemplares");
                 $routes->get('gestion_ejemplares',"ApiUsuarioResponsableController::gestion_ejemplares");
 
-                $routes->options('agregar_ejemplar',"ApiUsuarioResponsableController::agregar_ejemplar");
-                $routes->get('agregar_ejemplar',"ApiUsuarioResponsableController::agregar_ejemplar");
+                $routes->post('agregar_ejemplar',"ApiUsuarioResponsableController::agregar_ejemplar");
                 
-                $routes->options('borrar_ejemplar','ApiUsuarioResponsableController::borrar_ejemplar');
                 $routes->get('borrar_ejemplar','ApiUsuarioResponsableController::borrar_ejemplar');
         
         
                 //USUARIOS
-                $routes->options('gestion_usuarios',"ApiUsuarioResponsableController::gestion_usuarios");
                 $routes->get('gestion_usuarios',"ApiUsuarioResponsableController::gestion_usuarios");
 
-                //$routes->get('agregar_profesor',"UsuariosController::agregar_profesor");
-                $routes->options('agregar_profesor',"ApiUsuarioResponsableController::agregar_usuario_post");
                 $routes->post('agregar_profesor',"ApiUsuarioResponsableController::agregar_usuario_post");
 
-                //$routes->get('agregar_estudiante',"UsuariosController::agregar_estudiante");
-                $routes->options('agregar_estudiante',"ApiUsuarioResponsableController::agregar_usuario_post");
                 $routes->post('agregar_estudiante',"ApiUsuarioResponsableController::agregar_usuario_post");
                 
-                //$routes->get('agregar_pas',"UsuariosController::agregar_pas");
-                $routes->options('agregar_pas',"ApiUsuarioResponsableController::agregar_usuario_post");
                 $routes->post('agregar_pas',"ApiUsuarioResponsableController::agregar_usuario_post");
 
-                $routes->options('activar_desactivar',"ApiUsuarioResponsableController::activar_desactivar");
                 $routes->get('activar_desactivar',"ApiUsuarioResponsableController::activar_desactivar");
                 
-                $routes->options('mi_cuenta',"ApiUsuarioResponsableController::mi_cuenta");
                 $routes->get('mi_cuenta',"ApiUsuarioResponsableController::mi_cuenta");
 
-                $routes->options('mi_cuenta',"ApiUsuarioResponsableController::mi_cuenta_usuario_post");
                 $routes->post('mi_cuenta',"ApiUsuarioResponsableController::mi_cuenta_usuario_post");
         
-                //$routes->get('usuario_masivo',"UploadFilesController::usuario_masivo");
-                //$routes->post('usuario_masivo',"UploadFilesController::usuario_masivo_post");
-        
-                //RESERVAS
-                $routes->options('reservas',"ApiUsuarioResponsableController::reservas");
                 $routes->get('reservas',"ApiUsuarioResponsableController::reservas");
 
-                $routes->options('reserva_aceptada',"ApiUsuarioResponsableController::reserva_aceptada");
                 $routes->post('reserva_aceptada',"ApiUsuarioResponsableController::reserva_aceptada");
         
         
             });
+
+            $routes->group('privado/2',function($routes){
+                //$routes->group('privado/2',function($routes){
+                    
+                    $routes->options('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca");
+                    
+                    $routes->options('editar_biblioteca',"ApiUsuarioResponsableController::editar_biblioteca_post");
+            
+                    //LIBROS
+                    $routes->options('gestion_libros',"ApiUsuarioResponsableController::gestion_libros");
+                    
+                    $routes->options('agregar_libro',"ApiUsuarioResponsableController::agregar_libro_post");
+                    
+                    $routes->options('borrar_libro','ApiUsuarioResponsableController::borrar_libro');
+            
+            
+                    //EJEMPLARES
+                    $routes->options('gestion_ejemplares',"ApiUsuarioResponsableController::gestion_ejemplares");
+    
+                    $routes->options('agregar_ejemplar',"ApiUsuarioResponsableController::agregar_ejemplar");
+                    
+                    $routes->options('borrar_ejemplar','ApiUsuarioResponsableController::borrar_ejemplar');
+            
+            
+                    //USUARIOS
+                    $routes->options('gestion_usuarios',"ApiUsuarioResponsableController::gestion_usuarios");
+    
+                    $routes->options('agregar_profesor',"ApiUsuarioResponsableController::agregar_usuario_post");
+    
+                    $routes->options('agregar_estudiante',"ApiUsuarioResponsableController::agregar_usuario_post");
+                    
+                    $routes->options('agregar_pas',"ApiUsuarioResponsableController::agregar_usuario_post");
+    
+                    $routes->options('activar_desactivar',"ApiUsuarioResponsableController::activar_desactivar");
+                    
+                    $routes->options('mi_cuenta',"ApiUsuarioResponsableController::mi_cuenta");
+    
+                    $routes->options('mi_cuenta',"ApiUsuarioResponsableController::mi_cuenta_usuario_post");
+                    //RESERVAS
+                    $routes->options('reservas',"ApiUsuarioResponsableController::reservas");
+    
+                    $routes->options('reserva_aceptada',"ApiUsuarioResponsableController::reserva_aceptada");
+                });
         
             //PROFESOR
             $routes->group('privado/3',['filter'=>'jwt'],function($routes){

@@ -137,21 +137,21 @@ class ApiUsuarioResponsableController extends ResourceController
             if ($this->validate($validationRules)){
                 
                 $data = [
-                    'isbn_13' =>$datos['isbn_13'],
-                    'titulo' => $datos['titulo'],
-                    'subtitulo' => $datos['subtitulo'],
-                    'idioma' => $datos['idioma'],
-                    'editorial' => $datos['editorial'],
-                    'fecha_publicacion' => $datos['fecha_publicacion'],
-                    'numero_paginas' => $datos['numero_paginas'],
-                    'descripcion' => $datos['descripcion'],
-                    'imagen' => $datos['imagen']
+                    'isbn_13' =>$datos->isbn_13,
+                    'titulo' => $datos->titulo,
+                    'subtitulo' => $datos->subtitulo,
+                    'idioma' => $datos->idioma,
+                    'editorial' => $datos->editorial,
+                    'fecha_publicacion' => $datos->fecha_publicacion,
+                    'numero_paginas' => $datos->numero_paginas,
+                    'descripcion' => $datos->descripcion,
+                    'imagen' => $datos->imagen
                 ];
                 $model_libro->insert($data);
 
-                if ( str_contains(';', $datos['autores']) ){
+                if ( str_contains(';', $datos->autores) ){
                     //SEPARAR TODAS LAS CATEGORIAS QUE VINIERON DEL FORMULARIO Y HACER EL INSERT 1x1, AL MISMO TIEMPO LA TABLA RELACIONAL
-                    $autores = explode(';',$datos['autores']);
+                    $autores = explode(';',$datos->autores);
                     for ($i=0; $i<sizeof($autores); $i++  ){
                         $autor = $model_autor->where('nombre_autor',$autores[$i])->findAll();
                         if ( sizeof($autor) == 0 ){
@@ -162,7 +162,7 @@ class ApiUsuarioResponsableController extends ResourceController
                         }
                             
                         $autor = $model_autor->where('nombre_autor',$autores[$i])->first();
-                        $id_libro = $model_libro->where('isbn_13',$datos['isbn_13'])->first();
+                        $id_libro = $model_libro->where('isbn_13',$datos->isbn_13)->first();
                         $data = [
                             'id_libro' => $id_libro['isbn_13'],
                             'id_autor' => $autor['id_autor']
@@ -172,12 +172,12 @@ class ApiUsuarioResponsableController extends ResourceController
                 }
                 else{
                     $data = [
-                        'nombre_autor'=> $datos['autores']
+                        'nombre_autor'=> $datos->autores
                     ];
                     $model_autor->insert($data);      //INSERTAR A AUTORES
 
-                    $autor = $model_autor->where('nombre_autor',$datos['autores'])->first();
-                    $libro = $model_libro->obtener_libro($datos['isbn_13']); 
+                    $autor = $model_autor->where('nombre_autor',$datos->autores)->first();
+                    $libro = $model_libro->obtener_libro($datos->isbn_13); 
                     $model_libro_autor = new LibroAutorModel();
                     $data = [
                         'isbn_13' =>$libro['isbn_13'],
@@ -186,10 +186,10 @@ class ApiUsuarioResponsableController extends ResourceController
                     $model_libro_autor->insert($data);        //INSERTAR A LIBRO_AUTOR
                 }
 
-                if ( str_contains(';', $datos['categorias']) ){
+                if ( str_contains(';', $datos->categorias) ){
                     dd('+ categorias');
                     //SEPARAR TODAS LAS CATEGORIAS QUE VINIERON DEL FORMULARIO Y HACER EL INSERT 1x1, AL MISMO TIEMPO LA TABLA RELACIONAL
-                    $categorias = explode(';',$datos['categorias']);
+                    $categorias = explode(';',$datos->categorias);
                     for ($i=0; $i<sizeof($categorias); $i++  ){
                         $categoria = $model_categoria->where('nombre_categoria',$categorias[$i])->findAll();
                         if ( sizeof($categoria) == 0 ){
@@ -201,7 +201,7 @@ class ApiUsuarioResponsableController extends ResourceController
                         
                         $categoria = $model_categoria->where('nombre_categoria',$categorias[$i])->first();
                         //$id_libro = $model_libro->where('isbn_13',$datos['isbn_13'])->findAll();
-                        $id_libro = $model_libro->where('isbn_13',$datos['isbn_13'])->first();
+                        $id_libro = $model_libro->where('isbn_13',$datos->isbn_13)->first();
                         $data = [
                             'isbn_13' => $id_libro['isbn_13'],
                             'id_categoria' => $categoria['id_categoria']
@@ -211,12 +211,12 @@ class ApiUsuarioResponsableController extends ResourceController
                 }
                 else{
                     $data = [
-                        'nombre_categoria'=> $datos['categorias']
+                        'nombre_categoria'=> $datos->categorias
                     ];
                     $model_categoria->insert($data);      //INSERTAR A CATEGORIAS
 
-                    $categoria = $model_categoria->where('nombre_categoria',$datos['categorias'])->first();
-                    $libro = $model_libro->where('isbn_13',$datos['isbn_13'])->first();
+                    $categoria = $model_categoria->where('nombre_categoria',$datos->categorias)->first();
+                    $libro = $model_libro->where('isbn_13',$datos->isbn_13)->first();
                     $model_libro_categoria = new LibroCategoriaModel();
                     $data = [
                         'isbn_13' =>$libro['isbn_13'],
@@ -226,7 +226,7 @@ class ApiUsuarioResponsableController extends ResourceController
                 }
 
                 $data = [
-                    'isbn_13'=>$datos['isbn_13']
+                    'isbn_13'=>$datos->isbn_13
                 ];
                 $model_ejemplar->insert($data);
 
@@ -319,7 +319,7 @@ class ApiUsuarioResponsableController extends ResourceController
             $model_ejemplar = new EjemplaresModel();
 
             $data = [
-                'isbn_13' => $datos['isbn_13']
+                'isbn_13' => $datos->isbn_13
             ];
             $model_ejemplar->insert($data);
 
@@ -535,15 +535,15 @@ class ApiUsuarioResponsableController extends ResourceController
         $token_data = json_decode($this->request->header("token-data")->getValue());
         $datos = $this->request->getVar();
         $model = new UsuariosModel();
-        if ( $token_data->rol == 2 && $datos['nueva_contrasena'] == '' && $datos['contrasena'] == '' ){
+        if ( $token_data->rol == 2 && $datos->nueva_contrasena == '' && $datos->contrasena == '' ){
             $data = [
-                'dni_nie'=> $datos['dni_nie'],
-                'nombre'=> $datos['nombre'],
-                'apellido1'=> $datos['apellido1'],
-                'apellido2'=> $datos['apellido2'],
-                'correo_electronico'=>$datos['correo_electronico']
+                'dni_nie'=> $datos->dni_nie,
+                'nombre'=> $datos->nombre,
+                'apellido1'=> $datos->apellido1,
+                'apellido2'=> $datos->apellido2,
+                'correo_electronico'=>$datos->correo_electronico
             ];
-            $model->actualizar_usuario($datos['dni_nie'],$data);
+            $model->actualizar_usuario($datos->dni_nie,$data);
 
             $response = [
                 'status' => 200,
@@ -551,15 +551,15 @@ class ApiUsuarioResponsableController extends ResourceController
                 'messages' => 'Datos usuarios actualizados',
             ];
         }
-        elseif ( $token_data->rol == 2 && $datos['nueva_contrasena'] == '' ){
+        elseif ( $token_data->rol == 2 && $datos->nueva_contrasena == '' ){
             $data = [
-                'dni_nie'=> $datos['dni_nie'],
-                'nombre'=> $datos['nombre'],
-                'apellido1'=> $datos['apellido1'],
-                'apellido2'=> $datos['apellido2'],
-                'correo_electronico'=>$datos['correo_electronico']
+                'dni_nie'=> $datos->dni_nie,
+                'nombre'=> $datos->nombre,
+                'apellido1'=> $datos->apellido1,
+                'apellido2'=> $datos->apellido2,
+                'correo_electronico'=>$datos->correo_electronico
             ];
-            $model->actualizar_usuario($datos['dni_nie'],$data);
+            $model->actualizar_usuario($datos->dni_nie,$data);
 
             $response = [
                 'status' => 200,
@@ -567,18 +567,18 @@ class ApiUsuarioResponsableController extends ResourceController
                 'messages' => 'Datos usuarios actualizados, contraseña no',
             ];
 
-        }elseif ( $token_data->rol == 2 && $datos['nueva_contrasena'] != '' && $datos['contrasena'] != '' ) {
-            $contrasena_antes = $model->obtener_contra($datos['dni_nie']);
-            if ( password_verify($datos['contrasena'],$contrasena_antes['contrasena']) ){
+        }elseif ( $token_data->rol == 2 && $datos->nueva_contrasena != '' && $datos->contrasena != '' ) {
+            $contrasena_antes = $model->obtener_contra($datos->dni_nie);
+            if ( password_verify($datos->contrasena,$contrasena_antes['contrasena']) ){
                 $data = [
-                    'dni_nie'=> $datos['dni_nie'],
-                    'nombre'=> $datos['nombre'],
-                    'apellido1'=> $datos['apellido1'],
-                    'apellido2'=> $datos['apellido2'],
-                    'correo_electronico'=>$datos['correo_electronico'],
-                    'contrasena'=> password_hash($datos['nueva_contrasena'], PASSWORD_DEFAULT)
+                    'dni_nie'=> $datos->dni_nie,
+                    'nombre'=> $datos->nombre,
+                    'apellido1'=> $datos->apellido1,
+                    'apellido2'=> $datos->apellido2,
+                    'correo_electronico'=>$datos->correo_electronico,
+                    'contrasena'=> password_hash($datos->nueva_contrasena, PASSWORD_DEFAULT)
                 ];
-                $model->actualizar_usuario($datos['dni_nie'],$data);
+                $model->actualizar_usuario($datos->dni_nie,$data);
                 
                 $response = [
                     'status' => 200,

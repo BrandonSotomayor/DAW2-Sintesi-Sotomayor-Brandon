@@ -31,6 +31,7 @@ class UsuariosController extends BaseController
     
     public function iniciar_sesion_post(){
         
+        $datos = $this->request->getVar();
         $validationRules =
             [
                 'correo_electronico' => 'required',

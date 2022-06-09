@@ -70,6 +70,7 @@ class JWTFilter implements FilterInterface
                 $response = service('response');
                 $response->setBody('Access denied. Wrong token params');
                 $response->setStatusCode(401);
+                log_message('error','Access denied. Wrong token params');
                 return $response;
             }
 
@@ -78,6 +79,7 @@ class JWTFilter implements FilterInterface
                 $response = service('response');
                 $response->setBody('Access denied. Token revoked');
                 $response->setStatusCode(401);
+                log_message('error','Access denied. Token revoked');
                 return $response;
             }
             // if oneTimeToken is enabled, revoke current token
@@ -93,6 +95,7 @@ class JWTFilter implements FilterInterface
             $response = service('response');
             $response->setBody('Access denied. ' . $ex->getMessage());
             $response->setStatusCode(401);
+            log_message('error','Access denied. ' . $ex->getMessage());
             return $response;
         } finally {
             // clear expired tokens in revoked tokens table
@@ -118,6 +121,7 @@ class JWTFilter implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
 
+        
         // ADD fields to api response, ONLY for StatusCode OK-200/CREATED-201/ACCEPTED-202
         if (
             $response->getStatusCode() == \CodeIgniter\HTTP\Response::HTTP_OK ||
@@ -149,6 +153,7 @@ class JWTFilter implements FilterInterface
             } catch (\Exception $ex) {
                 $response = service('response');
                 $response->setBody('Access denied. After. ' . $ex->getMessage());
+                log_message('error','Access denied. After. ' . $ex->getMessage());
                 $response->setStatusCode(401);
             } finally {
                 $response->setBody(json_encode($values));
