@@ -11,30 +11,27 @@ export class PrivadaService {
 
   private responsables_get;
   private reservas_get;
+  private reservas_en_curso;
 
-  private dni_nie :string = null;
-  private nombre: string = null;
-  private apellido1 : string = null;
-  private apellido2 : string = null;
-  private correo_electronico: string = null;
-  private contrasena: string = null;
-  private nueva_contrasena :string = null;
+  private catalogo_libros;
+  private catalogo_ejemplares;
   
   private cuenta_usuario;
 
   constructor(public _http: HttpClient, private _authService: AuthService) {
     //this.mi_cuenta_datos();
     if ( this._authService.rol == 'administrador' ){
-      console.log('entra admi');
       this.gestion_responsable_get();
     }
     if ( this._authService.rol == 'responsable' ) {
-      console.log('entra respoons');
       this.reservas_responsable_get();
+    }
+    if ( this._authService.rol == 'usuario' ) {
+      this.reservas_en_curso_usuario();
     }
    }
 
-   gestion_responsable_get():void{
+  gestion_responsable_get():void{
     let options: any = {
       headers: new HttpHeaders()
       .set('Accept','application/json')
@@ -268,7 +265,108 @@ export class PrivadaService {
       }
     );
   }
+
+  reservas_en_curso_usuario():void{
+    let options: any = {
+      headers: new HttpHeaders()
+      .set('Accept','application/json')
+      .set('Content-Type', 'application/json',)
+      .set('Authorization', 'Bearer '+ this._authService.token)
+    }
+
+    new Promise(
+      (resolve, reject) => {
+          this._http.get(this.BASE_URL + "usuarios/privado/"+this._authService.id_rol+"/inicio", options).subscribe(
+              (response: any) => {
+                  console.log(response);
+                  if(response.status == 200) {
+                    this.reservas_en_curso = response.reservas;
+                    this._authService.token = response.refreshToken; 
+                  }
+                  else {
+                    resolve(false);
+                  }
+              },
+              (error: any) => {
+                  reject("Error");
+              }
+          );
+      }
+    );
+  }
+
+  catalogo_usuario():void{
+    let options: any = {
+      headers: new HttpHeaders()
+      .set('Accept','application/json')
+      .set('Content-Type', 'application/json',)
+      .set('Authorization', 'Bearer '+ this._authService.token)
+    }
+
+    new Promise(
+      (resolve, reject) => {
+          this._http.get(this.BASE_URL + "usuarios/privado/"+this._authService.id_rol+"/catalogo", options).subscribe(
+              (response: any) => {
+                  if(response.status == 200) {
+                    this.catalogo_libros = response.libros;
+                    this.catalogo_ejemplares = response.ejemplares;
+                    this._authService.token = response.refreshToken; 
+                  }
+                  else {
+                    resolve(false);
+                  }
+              },
+              (error: any) => {
+                  reject("Error");
+              }
+          );
+      }
+    );
+  }
+
+  reservar_usuario_post(id_ejemplar:string):void{
+
+    let options: any = {
+      headers: new HttpHeaders()
+      .set('Accept','application/json')
+      .set('Content-Type', 'application/json',)
+      .set('Authorization', 'Bearer '+ this._authService.token)
+    }
+
+    const data: any = {
+      "id_ejemplar": id_ejemplar,
+    }
+
+    new Promise(
+      (resolve, reject) => {
+          this._http.post(this.BASE_URL + "usuarios/privado/"+this._authService.id_rol+"/reservar", data, options).subscribe(
+              (response: any) => {
+                  if(response.status == 200) {
+                    this._authService.token = response.refreshToken; 
+                    console.log(1);
+                  }
+                  else {
+                    resolve(false);
+                    console.log(2);
+                  }
+              },
+              (error: any) => {
+                console.log(error);
+                  reject("Error");
+              }
+          );
+      }
+      );
+    }
+    
   
+  get libros_catalogo():any{
+    return this.catalogo_libros;
+  }
+
+  get ejemplares_catalogo():any{
+    return this.catalogo_ejemplares;
+  }
 
   get responsables():any{
     return this.responsables_get;
@@ -280,5 +378,9 @@ export class PrivadaService {
 
   get reservas():any{
     return this.reservas_get;
+  }
+
+  get reservas_usuario():any{
+    return this.reservas_en_curso;
   }
 }

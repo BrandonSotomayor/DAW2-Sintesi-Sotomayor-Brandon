@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>Catálogo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col></ion-col>
+      <ion-col size="2">
+        <ion-button (click)="volver()" color="dark"><ion-icon name="arrow-back-circle-outline"></ion-icon></ion-button>
+      </ion-col>
+      
+
+    </ion-row>
+      <ion-row *ngFor="let libro of libros">
+        <ion-item>
+          <ion-col size="5">
+            <img src="{{libro.imagen}}">
+          </ion-col>
+          <ion-col>
+            <ion-item><b>{{libro.titulo}}</b></ion-item>
+            <ion-item>{{libro.idioma}}</ion-item>
+            <ion-item>Pág. {{libro.numero_paginas}}</ion-item>
+            <ion-item>ISBN:{{libro.isbn_13}}</ion-item>
+            <ion-item>
+              <ion-row>
+                <ion-col *ngFor="let ejemplar of ejemplares">
+                  <ion-button *ngIf="libro.isbn_13 == ejemplar.isbn_13 && ejemplar.eliminado == 'no' && ejemplar.estado_eje == 'disponible' " (click)="reservar(ejemplar.id_ejemplar)" color="dark">{{ejemplar.id_ejemplar}}</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+          </ion-col>
+        </ion-item>
+      </ion-row>
+  </ion-grid>
+
+</ion-content>

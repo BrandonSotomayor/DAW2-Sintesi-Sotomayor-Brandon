@@ -17,7 +17,6 @@ export class SimplePage implements OnInit {
   }
 
   get libros():any{
-    console.log(this._publicaS.catalogo);
     return this._publicaS.catalogo;
   }
 

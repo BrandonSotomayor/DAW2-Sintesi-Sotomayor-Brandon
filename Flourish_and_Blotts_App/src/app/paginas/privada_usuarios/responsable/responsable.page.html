@@ -1,8 +1,5 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>Responsable</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +29,7 @@
               <ion-button (click)="reserva_aceptada()" color="dark">Reservas</ion-button>
             </ion-item>
             <ion-item>
-              <ion-button color="dark">Regresos</ion-button>
+              <ion-button (click)="regresar()" color="dark">Regresos</ion-button>
             </ion-item>
           </ion-col>
           <ion-col></ion-col>
@@ -123,7 +120,7 @@
         <ion-button (click)="prueba_ejemplar()">PruebaAgregarEjemplar</ion-button>
       </ion-row>
       <ion-row>
-        <ion-button (click)="prueba_reserva_aceptada()">PruebaReserva</ion-button>
+        <ion-button (click)="prueba_reserva_aceptada()">PruebaReservaAceptada</ion-button>
       </ion-row>
       <ion-row>
         <ion-button (click)="prueba_regresar()">PruebaRegresar</ion-button>

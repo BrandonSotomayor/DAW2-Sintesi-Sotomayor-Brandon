@@ -1,8 +1,5 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,6 +9,7 @@
   <ion-grid>
     <ion-row>
       <ion-col></ion-col>
+      <ion-col size="2"><ion-button (click)="catalogo()" color="medium"><ion-icon name="copy-outline"></ion-icon></ion-button></ion-col>
       <ion-col size="2"><ion-button (click)="mi_cuenta()" color="medium"><ion-icon name="person-circle-outline"></ion-icon></ion-button></ion-col>
       <ion-col size="3"><ion-button (click)="cerrar_sesion()" color="dark"><ion-icon name="log-out-outline"></ion-icon>Cerrar</ion-button></ion-col>
       <ion-col size="1"></ion-col>
@@ -22,15 +20,17 @@
       <ion-col><h2>Reservas</h2></ion-col>
       <ion-col></ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col size="8">
-        <ion-item><b>Título:</b></ion-item>
-        <ion-item><b>QR:</b></ion-item>
-        <ion-item><b>Fecha devolución:</b></ion-item>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
+    <div *ngFor="let reserva of reservas" style="margin-bottom: 25px;">
+      <ion-row *ngIf="reserva.estado_res != 'finalizado'" style="margin-bottom: 25px;">
+        <ion-col></ion-col>
+        <ion-col size="8">
+          <ion-item><b>Título:</b>{{reserva.titulo}}</ion-item>
+          <ion-item><b>QR:</b>{{reserva.isbn_13}}-{{reserva.id_ejemplar}}</ion-item>
+          <ion-item><b>Estado:</b>{{reserva.estado_res}}</ion-item>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
 </ion-content>

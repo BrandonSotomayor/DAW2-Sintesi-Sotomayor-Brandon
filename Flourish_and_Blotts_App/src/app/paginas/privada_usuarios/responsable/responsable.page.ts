@@ -25,13 +25,13 @@ export class ResponsablePage implements OnInit {
 
   constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService, private _libroService: LibrosService, private _privadaService: PrivadaService) { 
     this._bsService.configureScanner();
-    if ( this._authService.isUserAuthenticated() ) {
-      this._router.navigate(["paginas", this._authService.rol]);
-    }
-    else this._router.navigate(["paginas",'iniciarsesion']);
+    if ( !this._authService.isUserAuthenticated() ) this._router.navigate(["paginas",'iniciarsesion']);
+    //this._privadaService.reservas_en_curso_usuario();
   }
 
+  //EL USUARIO SCANEARÁ EL ISBN-13 Y SE CARGARÁ LOS DATOS DEL LIBRO, DONDE EL RESPONSABLE ACEPTARÁ SI SE GUARDARÁN LOS DATOS
   async startScanner(){
+
     this.nuevo_libro = true;
     const allowed = await this._bsService.checkPermissions();
     if ( allowed == true ){
@@ -55,6 +55,7 @@ export class ResponsablePage implements OnInit {
   }
 
   async startScannerEjemplar(){
+
     const allowed = await this._bsService.checkPermissions();
     if ( allowed == true ){
 
@@ -68,8 +69,6 @@ export class ResponsablePage implements OnInit {
       if ( code != null ){
         this.scanContent = code;
         this._libroService.agregar_ejemplar_datos_post(code);
-        this._libraryService.seach(code);
-        console.log(code);
 
         this._bsService.stopScanner();
         this.scanActive = false;
@@ -77,8 +76,53 @@ export class ResponsablePage implements OnInit {
     }
   }
 
-  reserva_aceptada(){
+  async reserva_aceptada(){
 
+    const allowed = await this._bsService.checkPermissions();
+    if ( allowed == true ){
+
+      this.scanActive = true;
+      document.body.classList.add('qrscanner');
+      const code = await this._bsService.startScanner();
+      //const result = await this._bsService.startScanner();
+      document.body.classList.remove('qrscanner');
+
+
+      if ( code != null ){
+        this.scanContent = code;
+        this._privadaService.reserva_aceptada_responsable_post(code);
+
+        this._bsService.stopScanner();
+        this.scanActive = false;
+      }
+    }
+  }
+
+  async regresar(){
+
+    const allowed = await this._bsService.checkPermissions();
+    if ( allowed == true ){
+
+      this.scanActive = true;
+      document.body.classList.add('qrscanner');
+      const code = await this._bsService.startScanner();
+      //const result = await this._bsService.startScanner();
+      document.body.classList.remove('qrscanner');
+
+
+      if ( code != null ){
+        this.scanContent = code;
+         this._privadaService.devolver_responsable_post(code);
+
+        this._bsService.stopScanner();
+        this.scanActive = false;
+      }
+    }
+  }
+
+  agregar_libro(){
+    this._libroService.agregar_libro_datos_post(this.datos_libro, this.datos_autor, this.datos_categoria);
+    this.nuevo_libro = false;
   }
 
   mi_cuenta(){
@@ -90,6 +134,7 @@ export class ResponsablePage implements OnInit {
     this._router.navigate(['paginas','iniciarsesion']);
   }
 
+  //EL USUARIO SCANEARÁ EL ISBN-13 Y SE CARGARÁ LOS DATOS DEL LIBRO, DONDE EL RESPONSABLE ACEPTARÁ SI SE GUARDARÁN LOS DATOS
   obtainBook(){
     this.nuevo_libro = true;
 
@@ -98,18 +143,15 @@ export class ResponsablePage implements OnInit {
     this.post += 1;
   }
 
-  agregar_libro(){
-    this._libroService.agregar_libro_datos_post(this.datos_libro, this.datos_autor, this.datos_categoria);
-    this.nuevo_libro = false;
-  }
-
   prueba_ejemplar(){
 
-    this._libroService.agregar_ejemplar_datos_post('9788401336560');
+    this._libroService.agregar_ejemplar_datos_post('9786073193948');
     
   }
 
+  //CUALQUIER ID_EJEMPLAR DE LOS QUE ESTAN EN RESERVAS DEL TABLERO RESPONSABLE
   prueba_reserva_aceptada(){
+
     let id_ejemplar = '19';
     this._privadaService.reserva_aceptada_responsable_post(id_ejemplar);
 
@@ -131,13 +173,11 @@ export class ResponsablePage implements OnInit {
 
   get libro():any{
     this.datos_libro = this._libraryService.getLibros;
-    console.log(this.datos_libro);
-    return this.datos_libro;
+    return this._libraryService.getLibros;
   }
 
   get autor():string{
     this.datos_autor = this._libraryService.autores;
-    console.log(this._libraryService.autores);
     return this._libraryService.autores;
   }
 

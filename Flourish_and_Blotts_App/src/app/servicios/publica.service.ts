@@ -45,7 +45,7 @@ export class PublicaService {
               (response: any) => {
                   if(response.status == 200) {
                     this.libros = response.data.libros;
-                    //console.log(response.data.libros);
+                    console.log(response.data.libros);
                   }
                   else {
                     resolve(false);

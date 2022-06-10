@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { BarcodescannerService } from 'src/app/servicios/barcodescanner.service';
 import { LibraryService } from 'src/app/servicios/library.service';
+import { PrivadaService } from 'src/app/servicios/privada.service';
 
 @Component({
   selector: 'app-usuario',
@@ -19,37 +20,12 @@ export class UsuarioPage implements OnInit {
   public nuevo_libro = false;
   public agregar_libro;
 
-  constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService) { 
+  constructor(private _bsService: BarcodescannerService, private _router: Router, private _authService: AuthService, private _libraryService: LibraryService, private _privadaService: PrivadaService) { 
     this._bsService.configureScanner();
-    if ( this._authService.isUserAuthenticated() ) {
-      this._router.navigate(["paginas", this._authService.rol]);
-    }
-    else this._router.navigate(["paginas",'iniciarsesion']);
-  }
-
-  async startScanner(){
-    const allowed = await this._bsService.checkPermissions();
-    if ( allowed == true ){
-
-      this.scanActive = true;
-      document.body.classList.add('qrscanner');
-      const code = await this._bsService.startScanner();
-      //const result = await this._bsService.startScanner();
-      document.body.classList.remove('qrscanner');
-
-
-      if ( code != null ){
-        this.scanContent = code;
-        this._libraryService.seach(code);
-        console.log(code);
-        //his._libraryService.seach(code);
-
-        this._bsService.stopScanner();
-        this.scanActive = false;
-      }
-
-      console.log('startScanner');
-    }
+    if ( !this._authService.isUserAuthenticated() ) this._router.navigate(["paginas",'iniciarsesion']);
+      
+    this._router.navigate(["paginas", this._authService.rol]);
+    this._privadaService.reservas_en_curso_usuario();
   }
 
   mi_cuenta(){
@@ -69,6 +45,14 @@ export class UsuarioPage implements OnInit {
     this.post += 1;
     
     this.agregar_libro = this._libraryService.getLibros;
+  }
+
+  catalogo(){
+    this._router.navigate(['paginas','catalogoprivado']);
+  }
+
+  get reservas():any{
+    return this._privadaService.reservas_usuario;
   }
 
   ngOnInit() {

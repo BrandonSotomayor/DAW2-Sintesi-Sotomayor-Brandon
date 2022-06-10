@@ -90,43 +90,4 @@ export class LibrosService {
     );
   }
 
-  aggar_ejemplar_datos_post(isbn_13:string):void{
-    /*this.dni_nie = dni_nie;
-    this.nombre=nombre;
-    this.apellido1=apellido1;
-    this.correo_electronico=correo_electronico;
-    this.contrasena=contrasena;
-    this.nueva_contrasena=nueva_contrasena;
-*/
-  /*  let options: any = {
-      headers: new HttpHeaders()
-      //.set('Accept','application/json')
-      .set('Content-Type', 'application/json',)
-      //.set('Authorization', 'Bearer: '+ this._authService.token)
-    }
-    const data: any = {
-      'isbn_13': isbn_13,
-    }
-
-    new Promise(
-      (resolve, reject) => {
-          //Una crida POST ha de rebre l'URL, les dades i les opcions (capçaleres)
-          this._http.get(this.BASE_URL + "usuarios/privado/2/agregar_ejemplar", options, data).subscribe(
-              (response: any) => {
-
-                  if(response.status == 200) {
-                      console.log('ejemplar agregado');
-                  }
-                  else {
-                    console.log(response);
-                    resolve(false);
-                  }
-              },
-              (error: any) => {
-                  reject("Error");
-              }
-          );
-      }
-    );*/
-  }
 }

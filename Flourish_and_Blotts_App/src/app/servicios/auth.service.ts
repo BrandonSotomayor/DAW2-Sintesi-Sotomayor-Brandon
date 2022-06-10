@@ -9,6 +9,7 @@ export class AuthService {
   private BASE_URL: string = "http://localhost:80/api/";
   private _email: string = null;
   private _passwd: string = null;
+  private reservas_en_curso;
 
   constructor(public _http: HttpClient) { }
 
@@ -76,6 +77,7 @@ export class AuthService {
     this._passwd = null;
     localStorage.removeItem("TOKEN");
     localStorage.removeItem("ROL");
+    localStorage.removeItem("ID_ROL");
   }
   
   get token(): string {

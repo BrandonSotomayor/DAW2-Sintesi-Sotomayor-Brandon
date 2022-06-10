@@ -27,7 +27,7 @@ export class MicuentausuarioPage implements OnInit {
   }
 
   cancelar(){
-    this._router.navigate(['paginas','responsable']);
+    this._router.navigate(['paginas',this._authService.rol]);
   }
 
   ngOnInit() {

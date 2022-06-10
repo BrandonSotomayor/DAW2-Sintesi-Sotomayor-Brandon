@@ -29,10 +29,6 @@ const routes: Routes = [
         path: 'micuenta',
         loadChildren: () => import('./privada_usuarios/micuenta/micuenta.module').then( m => m.MicuentaPageModule)
       },
-      {
-        path: 'micuentaresponsable',
-        loadChildren: () => import('./privada_usuarios/micuentaresponsable/micuentaresponsable.module').then( m => m.MicuentaresponsablePageModule)
-      },
       
     ]
   },
@@ -75,6 +71,10 @@ const routes: Routes = [
   {
     path: 'micuentausuario',
     loadChildren: () => import('./privada_usuarios/micuentausuario/micuentausuario.module').then( m => m.MicuentausuarioPageModule)
+  },
+  {
+    path: 'catalogoprivado',
+    loadChildren: () => import('./privada_usuarios/catalogoprivado/catalogoprivado.module').then( m => m.CatalogoprivadoPageModule)
   },
 ];
 

@@ -17,11 +17,9 @@ export class IniciarsesionPage implements OnInit {
   constructor(private _router: Router, private _authService: AuthService, public _http: HttpClient) {
     if ( this._authService.isUserAuthenticated() ) {
       this._router.navigate(["paginas",this._authService.rol]);
-      console.log('cesion iniciada');
     }
     else {
       this._router.navigate(["paginas",'iniciarsesion']);
-      console.log('cesion no iniciada');
     }
   }
   
