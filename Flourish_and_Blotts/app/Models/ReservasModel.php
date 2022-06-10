@@ -144,4 +144,20 @@ class ReservasModel extends Model
         }
         return $query;
     }
+
+    public function obtener_reservas_en_curso($dni_nie=null){
+
+        if ( $dni_nie != null ){
+            //PARA USUARIO
+            $db      = \Config\Database::connect();
+            $builder = $db->table('reservas');
+            
+            $builder->select('*');
+            $builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
+            $builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
+
+            $query = $builder->getWhere(['reservas.dni_nie'=>$dni_nie,]);
+            return $query;
+        }
+    }
 }

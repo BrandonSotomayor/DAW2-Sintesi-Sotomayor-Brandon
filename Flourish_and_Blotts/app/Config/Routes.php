@@ -359,6 +359,8 @@ $routes->group("api", function ($routes) {
         
             //PROFESOR
             $routes->group('privado/3',['filter'=>'jwt'],function($routes){
+
+                $routes->get('inicio',"ApiUsuarioController::inicio");
         
                 $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
@@ -366,7 +368,7 @@ $routes->group("api", function ($routes) {
         
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->get('reservar',"ApiUsuarioController::reservar");
+                $routes->post('reservar',"ApiUsuarioController::reservar");
 
                 $routes->get('recogido',"ApiUsuarioController::recogido");
                 
@@ -384,6 +386,8 @@ $routes->group("api", function ($routes) {
 
             $routes->group('privado/3',function($routes){
         
+                $routes->options('inicio',"ApiUsuarioController::inicio");
+
                 $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
                 $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta_profesor_post");
@@ -408,6 +412,8 @@ $routes->group("api", function ($routes) {
         
             //ESTUDIANTE
             $routes->group('privado/4',['filter'=>'jwt'],function($routes){
+
+                $routes->get('inicio',"ApiUsuarioController::inicio");
                 
                 $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
@@ -415,7 +421,7 @@ $routes->group("api", function ($routes) {
         
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->get('reservar',"ApiUsuarioController::reservar");
+                $routes->post('reservar',"ApiUsuarioController::reservar");
 
                 $routes->get('recogido',"ApiUsuarioController::recogido");
                 
@@ -432,6 +438,8 @@ $routes->group("api", function ($routes) {
             });
 
             $routes->group('privado/4',function($routes){
+
+                $routes->options('inicio',"ApiUsuarioController::inicio");
                 
                 $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
@@ -457,6 +465,8 @@ $routes->group("api", function ($routes) {
         
             //PAS
             $routes->group('privado/5',['filter'=>'jwt'],function($routes){
+
+                $routes->get('inicio',"ApiUsuarioController::inicio");
                 
                 $routes->get('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 
@@ -464,7 +474,7 @@ $routes->group("api", function ($routes) {
         
                 $routes->get('catalogo',"ApiUsuarioController::catalogo");
         
-                $routes->get('reservar',"ApiUsuarioController::reservar");
+                $routes->post('reservar',"ApiUsuarioController::reservar");
 
                 $routes->get('recogido',"ApiUsuarioController::recogido");
                 
@@ -481,6 +491,8 @@ $routes->group("api", function ($routes) {
             });
 
             $routes->group('privado/5',function($routes){
+
+                $routes->options('inicio',"ApiUsuarioController::inicio");
                 
                 $routes->options('mi_cuenta',"ApiUsuarioController::mi_cuenta");
 

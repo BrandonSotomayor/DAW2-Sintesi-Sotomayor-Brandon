@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BibliotecasModel;
 use App\Models\EjemplaresModel;
 use App\Models\LibrosModel;
+use App\Models\ReservasModel;
 use App\Models\RolesModel;
 use App\Models\UsuariosModel;
 use CodeIgniter\RESTful\ResourceController;
@@ -184,8 +185,11 @@ class ApiPublicaController extends ResourceController
             helper("form");
 
             $model = new UsuariosModel();
+            $model_reserva = new ReservasModel();
             $model_roles = new RolesModel();
             $user = $model->getUserByMailOrUsername($this->request->getVar('correo_electronico'));
+            $reservas = $model_reserva->obtener_reservas_en_curso($user['dni_nie']);
+
             $nombre_rol = $model_roles->nombre_rol($user['id_rol']);
 
             if (!$user) {
@@ -223,16 +227,28 @@ class ApiPublicaController extends ResourceController
             $token = newTokenJWT($cfgAPI->config(), $data);
             /****************** END TOKEN GENERATION **************/
 
-            
-            $response = [
-                'status' => 200,
-                'error' => false,
-                'messages' => 'Has iniciado sesión',
-                'token' => $token,
-                'rol' => $nombre_rol['nombre_rol'],
-                'id_rol' => $user['id_rol'],
-                'dni_nie' => $user['dni_nie']
-            ];
+            if ( $user['id_rol'] == 3 || $user['id_rol'] == 4 || $user['id_rol'] == 5 ){
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Has iniciado sesión',
+                    'token' => $token,
+                    'rol' => $nombre_rol['nombre_rol'],
+                    'id_rol' => $user['id_rol'],
+                    'dni_nie' => $user['dni_nie'],
+                    'reservas' => $reservas->getResult()
+                ];
+            }else {
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Has iniciado sesión',
+                    'token' => $token,
+                    'rol' => $nombre_rol['nombre_rol'],
+                    'id_rol' => $user['id_rol'],
+                    'dni_nie' => $user['dni_nie']
+                ];
+            }
             return $this->respondCreated($response);
             
         }

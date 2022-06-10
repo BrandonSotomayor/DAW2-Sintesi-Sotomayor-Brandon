@@ -175,7 +175,7 @@ class ApiUsuarioController extends ResourceController
 
         $token_data = json_decode($this->request->header("token-data")->getValue());
         $datos = $this->request->getVar();
-        if ( $token_data->rol == 3 && $datos != null ){
+        if ( $token_data->rol == 3 || $token_data->rol == 4 || $token_data->rol == 5 ){
             
             $model_reserva = new ReservasModel();
             $model_usuario = new UsuariosModel();
@@ -184,15 +184,15 @@ class ApiUsuarioController extends ResourceController
             $usuario = $model_usuario->obtener_usuario($token_data->dni_nie);
             if ( $usuario['id_penalizacion'] == null  ){
                 $data = [
-                    'id_ejemplar'=>$datos['id_ejemplar'],
-                    'dni_nie' => $datos['dni_nie']
+                    'id_ejemplar'=>$datos->id_ejemplar,
+                    'dni_nie' => $token_data->dni_nie
                 ];
                 $model_reserva->insert($data);
 
                 $data = [
                     'estado_eje' => 'reservado'
                 ];
-                $model_ejemplar->update($datos['id_ejemplar'],$data);
+                $model_ejemplar->update($datos->id_ejemplar,$data);
 
                 $response = [
                     'status' => 200,
@@ -432,12 +432,35 @@ class ApiUsuarioController extends ResourceController
         }else{
             $response = [
                 'status' => 500,
-                'error' => false,
+                'error' => true,
                 'messages' => 'No tienes cuenta',
             ];
         }
         return $this->respond($response);
 
+    }
+
+    public function inicio(){
+        $token_data = json_decode($this->request->header("token-data")->getValue());
+        if ( $token_data->rol == 3 || $token_data->rol == 4 || $token_data->rol == 5  ){
+            
+            $model = new ReservasModel();
+            $reservas = $model->obtener_reservas_en_curso($token_data->dni_nie)->getResult();
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Reservas usuario',
+                'reservas' => $reservas
+            ];
+
+        }else{
+            $response = [
+                'status' => 500,
+                'error' => true,
+                'messages' => 'No tienes cuenta',
+            ];
+        }
+        return $this->respond($response);
     }
     /**
      * Return an array of resource objects, themselves in array format

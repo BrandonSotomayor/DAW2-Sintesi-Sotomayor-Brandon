@@ -127,9 +127,7 @@ class EjemplaresModel extends Model
         //$builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
         $query = $builder->getWhere(['isbn_13'=>$isbn_13]); //get();
         foreach( $query->getResult() as $row ){
-            echo $row->num." ";
         }
-        dd('a');
         return $query;
     }
     
