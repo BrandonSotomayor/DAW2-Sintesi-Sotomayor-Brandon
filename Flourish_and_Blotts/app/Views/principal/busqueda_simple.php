@@ -55,13 +55,29 @@
                 <tbody>
                     <?php if ( !empty($libros->getResult()) ){ ?>
                         <?php foreach ($libros->getResult() as $n) {
+                            if ( isset($libros_titulo)  ) {
+                                foreach ( $libros_titulo as $libro_titulo ){
+                                    if ( $libro_titulo == $n->titulo ){
+                                        echo "<tr>";
+                                            echo "<td><img src='" . $n->imagen . "'"."style='width: 100%'></td>";
+                                            echo "<td style='text-align: center;line-height:30px'>" .$n->titulo ."</td>";
+                                            if ( strlen($n->descripcion) > 370 ) echo "<td style='text-align: center;line-height:30px'>" . substr($n->descripcion,0,370) . "</td>";
+                                            else echo "<td style='text-align: center;line-height:30px'>" . $n->descripcion . "</td>";
+                                            ?><td><a href="<?= base_url('publica/pdf').'?isbn_13='.$n->isbn_13 ?>" class="btn" style="font-size:25px"><i class="bi bi-filetype-pdf"></i></a></td>
+                                        <?php echo "</tr>";
+                                    }
+                                }
+                                
+                            }else {
                                 echo "<tr>";
                                     echo "<td><img src='" . $n->imagen . "'"."style='width: 100%'></td>";
                                     echo "<td style='text-align: center;line-height:30px'>" .$n->titulo ."</td>";
-                                    echo "<td style='text-align: center;line-height:30px'>" . $n->descripcion . "</td>";
+                                    if ( strlen($n->descripcion) > 370 ) echo "<td style='text-align: center;line-height:30px'>" . substr($n->descripcion,0,370) . "</td>";
+                                    else echo "<td style='text-align: center;line-height:30px'>" . $n->descripcion . "</td>";
                                     ?><td><a href="<?= base_url('publica/pdf').'?isbn_13='.$n->isbn_13 ?>" class="btn" style="font-size:25px"><i class="bi bi-filetype-pdf"></i></a></td>
                                 <?php echo "</tr>";
                             }
+                        }
                     } ?>
                 </tbody>
             </table>

@@ -53,9 +53,6 @@ class OpinionesModel extends Model
             $builder->join('libros', 'libros.isbn_13 = opiniones.isbn_13');
             $builder->join('usuarios', 'usuarios.dni_nie = opiniones.dni_nie');
             $query = $builder->getWhere(['libros.isbn_13' =>$isbn_13]);
-            foreach( $query->getResult() as $row ){
-                //echo $row->opinion." ";
-            }
             return $query;
     }
 }

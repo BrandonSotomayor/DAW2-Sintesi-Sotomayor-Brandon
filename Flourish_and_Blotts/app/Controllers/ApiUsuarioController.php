@@ -112,13 +112,6 @@ class ApiUsuarioController extends ResourceController
                         'contrasena'=> password_hash($datos->nueva_contrasena, PASSWORD_DEFAULT)
                     ];
                     $model->actualizar_usuario($datos->dni_nie,$data);
-    
-                    /*$data = [
-                        'tipo_profesor' => $datos['tipos'][0],
-                        'nombre_familia_profesional' => $datos['familias_profesionales'][0]
-                    ];
-                    $model_profesor->actualizar_profesor($datos['id_usuario'],$data);
-                    */
                     
                     $response = [
                         'status' => 200,
@@ -148,17 +141,22 @@ class ApiUsuarioController extends ResourceController
     public function catalogo(){
 
         $token_data = json_decode($this->request->header("token-data")->getValue());
-        if ( $token_data->rol == 3 ){
+        if ( $token_data->rol == 3 || $token_data->rol == 4 ||$token_data->rol == 5 ){
             
             $model_libro = new LibrosModel();
             $model_ejemplar = new EjemplaresModel();
+
+            $libros = $model_libro->obtener_libro();
+            $ejemplares = $model_ejemplar->obtener_ejemplar();
+
+
 
             $response = [
                 'status' => 200,
                 'error' => false,
                 'messages' => 'Catálogo',
-                'libros'=>$model_libro->obtener_libro(),
-                'ejemplares'=>$model_ejemplar->obtener_ejemplar()
+                'libros'=>$libros,
+                'ejemplares'=>$ejemplares
             ];
         }
         else{

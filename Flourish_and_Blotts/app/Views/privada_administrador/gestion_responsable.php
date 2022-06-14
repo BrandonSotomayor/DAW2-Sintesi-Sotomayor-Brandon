@@ -12,9 +12,6 @@
                         <thead>
                             <tr>
                                 <th scope="col">DNI/NIE</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido 1</th>
-                                <th scope="col">Apellido 2</th>
                                 <th scope="col">Correo electrónico</th>
                                 <th scope="col">Rol</th>
                                 <th scope="col">Estado</th>
@@ -32,9 +29,6 @@
                                         <?php foreach ( $roles as $rol ): 
                                             if ( $rol['nombre_rol'] == 'responsable' && $usuario['id_rol'] == $rol['id_rol']  ) {?>
                                                 <td><?= $usuario['dni_nie']?></td>
-                                                <td><?= $usuario['nombre']?></td>
-                                                <td><?= $usuario['apellido1']?></td>
-                                                <td><?= $usuario['apellido2']?></td>
                                                 <td><?= $usuario['correo_electronico']?></td>
                                                 <td><?= $rol['nombre_rol'] ?></td>
                                                 <td><?= $usuario['estado']?></td>

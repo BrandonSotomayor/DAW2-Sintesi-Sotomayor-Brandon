@@ -94,11 +94,12 @@ class ApiUsuarioResponsableController extends ResourceController
         if ( $token_data->rol == 2 ){
 
             $model = new LibrosModel();
+            $model_reserva = new ReservasModel();
             $response = [
                 'status' => 200,
                 'error' => false,
                 'messages' => 'Libros',
-                'libros' => $model->obtener_libro(),
+                'reservas' => $model_reserva->obtener_reservas()->getResult()// obtener_libro(),
             ];
         }else{
             $response = [
@@ -190,7 +191,6 @@ class ApiUsuarioResponsableController extends ResourceController
                 }
 
                 if ( str_contains(';', $datos->categorias) ){
-                    dd('+ categorias');
                     //SEPARAR TODAS LAS CATEGORIAS QUE VINIERON DEL FORMULARIO Y HACER EL INSERT 1x1, AL MISMO TIEMPO LA TABLA RELACIONAL
                     $categorias = explode(';',$datos->categorias);
                     for ($i=0; $i<sizeof($categorias); $i++  ){

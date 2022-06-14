@@ -83,9 +83,22 @@ class GeneralController extends BaseController
                 
             }
             else{
+
+                $libros_titulo = [];
                 $titulo = $datos['titulo'];
-                $data['texto'] = $datos['titulo'];
-                $libros = $model->libro_titulo($datos['titulo']);
+                $libros = $model->obtener_libro_simple();
+
+                if ( strlen($titulo) > 0 ){
+                    $libros = $model->obtener_libro_simple();
+                    $len = sizeof($libros->getResult());
+                    for( $i=0; $i<$len; $i++ ){
+                        $titulo_db = strtolower($libros->getResult()[$i]->titulo);
+                        $titulo_form = strtolower($datos['titulo']);
+                        if ( str_contains($titulo_db,$titulo_form) ){
+                            array_push($libros_titulo,$libros->getResult()[$i]->titulo);
+                        }
+                    }
+                }
 
                 $table = new \CodeIgniter\View\Table();
 
@@ -94,6 +107,7 @@ class GeneralController extends BaseController
                     'libros' => $libros,
                     'titulo' => $titulo,
                     'table' => $table,
+                    'libros_titulo' => $libros_titulo
                 ];
                 return view('principal/busqueda_simple',$data);
             }

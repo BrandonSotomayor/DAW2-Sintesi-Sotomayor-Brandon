@@ -125,10 +125,6 @@ class UsuariosController extends BaseController
 
                 $data['output'] = $crud->render();
                 return view('privada_responsable/opcion_gestion_libro');
-                //return view('adminRes/mesas/mesas', $data);
-                //dd($datos);
-                //session()->setFlashdata('mensaje','Libro añadido correctamente');
-                //return redirect()->to('usuarios/privado/2');
             }
             else {
                 session()->setFlashdata('mensaje','Debes llenar todos los campos');

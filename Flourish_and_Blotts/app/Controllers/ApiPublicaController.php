@@ -297,33 +297,34 @@ class ApiPublicaController extends ResourceController
                 $libros = $model->obtener_libro();
                 $ejemplares = $model_ejemplar->obtener_ejemplar();
         
-                $html = '<div><div class="row"><h1 style="text-align: center;">Flourish & Blotts</h1></div>';
+                $html = 'FLOURISH & BLOTTS;';
         
                 foreach( $libros as $libro ) {
-                    $html .= '<h2>'.$libro['titulo'].'</h2>';
-                    $html .= '<p><b>QR de los ejemplares</b></p>';
+                    $html .= $libro['titulo'].';';
+                    $html .= 'QR Ejemplares:;';
                     for( $i=0; $i<sizeof($ejemplares); $i++ ){
                         
                         if ( $libro['isbn_13'] == $ejemplares[$i]['isbn_13'] && $ejemplares[$i]['id_ejemplar'] > 9 ){
-                            $html .= '<p style="margin-top: 35px;margin-left:10%">'.$libro['isbn_13'].'-'.$ejemplares[$i]['id_ejemplar'].'</p>';
+                            $html .= $libro['isbn_13'].'-'.$ejemplares[$i]['id_ejemplar'].';';
                         }
                         elseif ( $libro['isbn_13'] == $ejemplares[$i]['isbn_13'] && $ejemplares[$i]['id_ejemplar'] < 10 ) {
-                            $html .= '<p style="margin-top: 35px;margin-left:10%">'.$libro['isbn_13'].'-0'.$ejemplares[$i]['id_ejemplar'].'</p>';
+                            $html .= $libro['isbn_13'].'-0'.$ejemplares[$i]['id_ejemplar'].';';
                         }
                     }
                 }
-                $html .= '</div>';
+                $html .= 'En colaboración con PDFMake';
         
-                $dompdf->loadHtml($html);
-                $dompdf->render();
+                //$dompdf->loadHtml($html);
+                //$dompdf->render();
                 
-                $dompdf->stream("ejemplares.pdf",['Attachment'=>1]); // Force download
-                die; // Required. If no dies, PDF was corrupted to browser
+                //$dompdf->stream("ejemplares.pdf",['Attachment'=>1]); // Force download
+                //die; // Required. If no dies, PDF was corrupted to browser
 
                 $response = [
                     'status' => 200,
                     'error' => false,
                     'messages' => 'Pdf creado',
+                    'html' => $html
                 ];
             return $this->respond($response);
     }

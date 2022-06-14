@@ -205,7 +205,6 @@ class UsuariosController extends BaseController
                 }
 
                 if ( str_contains(';', $datos['categorias']) ){
-                    dd('+ categorias');
                     //SEPARAR TODAS LAS CATEGORIAS QUE VINIERON DEL FORMULARIO Y HACER EL INSERT 1x1, AL MISMO TIEMPO LA TABLA RELACIONAL
                     $categorias = explode(';',$datos['categorias']);
                     for ($i=0; $i<sizeof($categorias); $i++  ){

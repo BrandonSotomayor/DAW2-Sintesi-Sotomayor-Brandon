@@ -74,7 +74,7 @@ class ReservasModel extends Model
             $builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
             $builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
             $builder->where('reservas.estado_res !=','finalizado');
-            $query = $builder->get();// Where(['reservas.estado_res'!='finalizado']);// get();
+            $query = $builder->get();
             return $query;
 
         }
@@ -112,9 +112,6 @@ class ReservasModel extends Model
            
         $builder->select('*');
         $query = $builder->get();
-        foreach ( $query->getResult() as $row ){
-            $row->id_reserva;
-        }
         return $query;
     }
 
@@ -124,11 +121,8 @@ class ReservasModel extends Model
            
         $builder->select('*');
         $builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
-        //$builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
+        
         $query = $builder->getWhere(['reservas.id_ejemplar'=>$id_ejemplar,'reservas.estado_res'=>'espera']);
-        foreach ( $query->getResult() as $row ){
-            $row->id_reserva;
-        }
         return $query;
     }
 
@@ -139,9 +133,6 @@ class ReservasModel extends Model
         $builder->select('*');
         $builder->join('ejemplares', 'ejemplares.id_ejemplar = reservas.id_ejemplar');
         $query = $builder->getWhere(['reservas.id_ejemplar'=>$id_ejemplar,'reservas.estado_res'=>'en curso']);
-        foreach ( $query->getResult() as $row ){
-            $row->id_reserva;
-        }
         return $query;
     }
 

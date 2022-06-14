@@ -49,8 +49,4 @@ class AutoresModel extends Model
     public function obtener_autor($id_autor){
         return $this->where('id_autor',$id_autor)->first();
     }
-    
-    public function obtener_autor_nombre($nombre){
-        //return $this->w
-    }
 }

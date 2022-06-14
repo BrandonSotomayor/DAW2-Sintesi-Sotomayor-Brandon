@@ -10,7 +10,7 @@
             </div>
             <form action="<?= base_url('publica/catalogo/busqueda_avanzada') ?>">
                 <div class="row" style="margin-top: 10px;">
-                    <div class="col-1"><h5>Autor</h5></div>
+                    <div class="col-1"><h5>Autor*</h5></div>
                     <div class="col-4"><input class="form-control" id="autor" name="autor"></div>
                     <div class="col-6"></div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="col-6"></div>
                 </div>
                 <div class="row" style="margin-top: 10px;">
-                    <div class="col-1"><h5>Categoria</h5></div>
+                    <div class="col-1"><h5>Categoria*</h5></div>
                     <div class="col-4" style="margin-left: 2px;"><input class="form-control" id="categoria" name="categoria"></div>
                     <div class="col-1"><input type="submit" class="btn btn-dark" value="Buscar"></div>
                 </div>

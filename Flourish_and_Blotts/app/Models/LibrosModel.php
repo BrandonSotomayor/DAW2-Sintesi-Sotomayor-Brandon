@@ -62,6 +62,15 @@ class LibrosModel extends Model
         return $this->findAll();
     }
 
+    public function obtener_libro_simple(){
+        $db      = \Config\Database::connect();
+        $builder = $db->table('libros');
+        
+        $builder->select('*');
+        $query = $builder->get();
+        return $query;
+    }
+
     public function obtener_libro_buscador($isbn_13=null){
 
         $db = \Config\Database::connect();
@@ -122,7 +131,7 @@ class LibrosModel extends Model
         
         $builder->select('*');
         $builder->join('ejemplares', 'ejemplares.isbn_13 = libros.isbn_13');
-        $query = $builder->get();//Where(['libros.isbn_13'=>$isbn_13,'ejemplares.eliminado'=>'no']);
+        $query = $builder->get();
         return $query;
     }
 

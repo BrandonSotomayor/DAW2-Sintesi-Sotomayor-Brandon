@@ -75,7 +75,6 @@ class EjemplaresModel extends Model
         $builder->limit(1);
         $builder->update($data);
         
-        // return $this->where('id_ejemplar',$id_ejemplar)->delete();
     }
 
     public function catalogo(){
@@ -85,9 +84,6 @@ class EjemplaresModel extends Model
             $builder->select('*');
             $builder->join('libros', 'libros.id_libro = ejemplares.id_libro');
             $query = $builder->get();
-            foreach( $query->getResult() as $row ){
-                //echo $row->id_ejemplar." ";
-            }
             return $query;
     }
 
@@ -124,10 +120,7 @@ class EjemplaresModel extends Model
         $builder = $db->table('ejemplares');
             
         $builder->select('count(*) as num');
-        //$builder->join('libros', 'libros.isbn_13 = ejemplares.isbn_13');
-        $query = $builder->getWhere(['isbn_13'=>$isbn_13]); //get();
-        foreach( $query->getResult() as $row ){
-        }
+        $query = $builder->getWhere(['isbn_13'=>$isbn_13]);
         return $query;
     }
     

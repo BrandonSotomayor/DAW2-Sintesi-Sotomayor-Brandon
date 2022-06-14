@@ -92,7 +92,6 @@ class UsuariosModel extends Model
 
     public function activar_desactivar($dni_nie,$data){
         
-        //dd($id_usuario)
         return $this->update($dni_nie,$data);
     }
 
