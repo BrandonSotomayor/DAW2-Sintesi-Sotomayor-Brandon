@@ -1,0 +1,7 @@
+CRITICAL - 2026-10-28 18:27:23 --> Undefined variable: datos_libro
+in APPPATH\Controllers\UploadFilesController.php on line 179.
+ 1 APPPATH\Controllers\UploadFilesController.php(179): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: datos_libro', 'APPPATH\\Controllers\\UploadFilesController.php', 179, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UploadFilesController->libro_masivo_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UploadFilesController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

@@ -1,0 +1,51 @@
+CRITICAL - 2026-10-18 11:52:11 --> Trying to access array offset on value of type null
+in APPPATH\Views\principal\horarios.php on line 23.
+ 1 APPPATH\Views\principal\horarios.php(23): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to access array offset on value of type null', 'APPPATH\\Views\\principal\\horarios.php', 23, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\principal\\horarios.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('principal/horarios', [], true)
+ 5 APPPATH\Controllers\GeneralController.php(152): view('principal/horarios', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\GeneralController->horarios()
+ 7 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GeneralController))
+ 8 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-18 15:59:02 --> Undefined index: id_usuario
+in APPPATH\Controllers\UsuariosController.php on line 332.
+ 1 APPPATH\Controllers\UsuariosController.php(332): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index: id_usuario', 'APPPATH\\Controllers\\UsuariosController.php', 332, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_usuario_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-18 17:43:22 --> Undefined index: id_usuario
+in APPPATH\Controllers\UsuariosController.php on line 332.
+ 1 APPPATH\Controllers\UsuariosController.php(332): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index: id_usuario', 'APPPATH\\Controllers\\UsuariosController.php', 332, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_usuario_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2026-10-18 17:48:29 --> Duplicate entry '78912345M' for key 'usuarios.PRIMARY'
+CRITICAL - 2026-10-18 17:48:29 --> Duplicate entry '78912345M' for key 'usuarios.PRIMARY'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('INSERT INTO `usuarios` (`dni_nie`, `nombre`, `apellido1`, `apellido2`, `correo_electronico`, `contrasena`, `estado`, `id_rol`, `id_penalizacion`, `fec_ultima_modificacion`) VALUES (\'78912345M\', \'Javier\', \'Rodríguez\', \'Ruiz\', \'javi.rodriguez@instituto.org\', \'$2y$10$H.hTnnOSbSfpxSoPOkQSuu0WLlpEvm9G0cllZrrPPMUHHEOEEjnfK\', \'activo\', 3, NULL, \'2026-10-18\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(678): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `usuarios` (`dni_nie`, `nombre`, `apellido1`, `apellido2`, `correo_electronico`, `contrasena`, `estado`, `id_rol`, `id_penalizacion`, `fec_ultima_modificacion`) VALUES (\'78912345M\', \'Javier\', \'Rodríguez\', \'Ruiz\', \'javi.rodriguez@instituto.org\', \'$2y$10$H.hTnnOSbSfpxSoPOkQSuu0WLlpEvm9G0cllZrrPPMUHHEOEEjnfK\', \'activo\', 3, NULL, \'2026-10-18\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `usuarios` (`dni_nie`, `nombre`, `apellido1`, `apellido2`, `correo_electronico`, `contrasena`, `estado`, `id_rol`, `id_penalizacion`, `fec_ultima_modificacion`) VALUES (\'78912345M\', \'Javier\', \'Rodríguez\', \'Ruiz\', \'javi.rodriguez@instituto.org\', \'$2y$10$H.hTnnOSbSfpxSoPOkQSuu0WLlpEvm9G0cllZrrPPMUHHEOEEjnfK\', \'activo\', 3, NULL, \'2026-10-18\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1904): CodeIgniter\Database\BaseConnection->query('INSERT INTO `usuarios` (`dni_nie`, `nombre`, `apellido1`, `apellido2`, `correo_electronico`, `contrasena`, `estado`, `id_rol`, `id_penalizacion`, `fec_ultima_modificacion`) VALUES (:dni_nie:, :nombre:, :apellido1:, :apellido2:, :correo_electronico:, :contrasena:, :estado:, :id_rol:, :id_penalizacion:, :fec_ultima_modificacion:)', [...], false)
+ 5 APPPATH\Models\UsuariosModel.php(54): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 APPPATH\Controllers\UsuariosController.php(327): App\Models\UsuariosModel->insertarUsuarios('78912345M', 'Javier', 'Rodríguez', 'Ruiz', 'javi.rodriguez@instituto.org', '78912345M', 'activo', 3, null)
+ 7 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_usuario_post()
+ 8 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 9 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-18 18:32:43 --> Call to undefined function App\Controllers\str_contains()
+in APPPATH\Controllers\GeneralController.php on line 97.
+ 1 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\GeneralController->busqueda_simple()
+ 2 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GeneralController))
+ 3 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-18 19:03:37 --> Undefined variable: data
+in APPPATH\Controllers\UsuariosController.php on line 63.
+ 1 APPPATH\Controllers\UsuariosController.php(63): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: data', 'APPPATH\\Controllers\\UsuariosController.php', 63, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->iniciar_sesion_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

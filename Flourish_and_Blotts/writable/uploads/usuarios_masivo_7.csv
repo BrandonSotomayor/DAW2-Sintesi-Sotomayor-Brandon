@@ -1,0 +1,4 @@
+dni_nie,nombre,apellido1,apellido2,correo_electronico,contrasena,estado,id_rol,id_penalizacion,fec_ultima_modificacion,fec_alta,tipo,familia_profesional
+99887766A,Beatriz,Elena,Gómez,beatriz.elena@iesflourish.es,BetaPass2026*,activo,3,,2026-10-28,2026-10-28,Maestro,Informática y Comunicaciones
+55443322B,Fernando,Alonso,Díaz,f.alonso@iesflourish.es,MagicNano2026!,activo,4,,2026-10-28,2026-10-28,Profesor de secundaria,Electricidad y Electrónica
+11224433C,Marta,Sánchez,Vicario,marta.sanchez@iesflourish.es,MartaSecure99,activo,5,,2026-10-28,2026-10-28,Professor técnico de FP,Artes Gráficas, Imagen y Sonido

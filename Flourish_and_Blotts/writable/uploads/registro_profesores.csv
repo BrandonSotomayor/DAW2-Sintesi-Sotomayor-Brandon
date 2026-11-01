@@ -1,0 +1,3 @@
+dni_nie,tipo,nombre,familia_profesional,apellido1,correo_electronico,apellido2,contrasena,id_rol
+12345678A,Maestro,Ana,Informática y Comunicaciones,García,ana.garcia@colegio.com,López,TempPass2026*,3
+87654321B,Profesor de secundaria,Carlos,Electricidad y Electrónica,Martínez,carlos.martinez@colegio.com,Ruiz,Secured_2026!,3

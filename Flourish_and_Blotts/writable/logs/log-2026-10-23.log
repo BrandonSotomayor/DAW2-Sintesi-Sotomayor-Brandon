@@ -1,0 +1,15 @@
+CRITICAL - 2026-10-23 20:29:04 --> The original file is not a valid file.
+in SYSTEMPATH\HTTP\Files\UploadedFile.php on line 137.
+ 1 SYSTEMPATH\HTTP\Files\UploadedFile.php(137): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+ 2 APPPATH\Controllers\UploadFilesController.php(43): CodeIgniter\HTTP\Files\UploadedFile->move('ROOTPATH\\writable\\uploads', 'ROOTPATH\\public')
+ 3 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UploadFilesController->usuario_masivo_post()
+ 4 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UploadFilesController))
+ 5 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-23 22:33:53 --> Undefined variable: datos
+in APPPATH\Controllers\UsuariosController.php on line 437.
+ 1 APPPATH\Controllers\UsuariosController.php(437): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: datos', 'APPPATH\\Controllers\\UsuariosController.php', 437, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->mi_cuenta()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

@@ -1,0 +1,4 @@
+dni_nie,nombre,apellido1,apellido2,correo_electronico,contrasena,estado,id_rol,fec_ultima_modificacion,tipo,familia_profesional
+12345678A,Carlos,García,López,carlos.garcia@ies.edu,Temporal2026*,Activo,3,2026-10-31,Profesor de secundaria,Informática y Comunicaciones
+87654321B,María,Rodríguez,Martínez,maria.rodriguez@ies.edu,Segura987#,Activo,3,2026-10-31,Profesor técnico de FP,Electricidad y Electrónica
+45678912C,Ana,Sánchez,Pérez,ana.sanchez@ies.edu,ClaveProfe123!,Activo,3,2026-10-31,Maestro,Artes Gráficas

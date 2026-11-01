@@ -1,0 +1,14 @@
+CRITICAL - 2026-10-31 13:52:20 --> Undefined variable: nuevo_estado
+in APPPATH\Controllers\UsuariosController.php on line 437.
+ 1 APPPATH\Controllers\UsuariosController.php(437): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: nuevo_estado', 'APPPATH\\Controllers\\UsuariosController.php', 437, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->activar_desactivar()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-31 15:56:16 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\UsuariosController.php on line 48.
+ 1 APPPATH\Controllers\UsuariosController.php(48): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to access array offset on value of type null', 'APPPATH\\Controllers\\UsuariosController.php', 48, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->iniciar_sesion_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

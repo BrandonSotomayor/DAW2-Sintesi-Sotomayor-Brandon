@@ -1,0 +1,4 @@
+isbn_13,titulo,subtitulo,idioma,editorial,fecha_publicacion,numero_paginas,descripcion,imagen,autores,categorias
+9788420674209,El deudor,Edicion Alianza,Español,Alianza Editorial,2013-10-10,256,Una mirada profunda a las relaciones de poder y deuda.,deudor.jpg,Fiodor Dostoievski,Clasicos;Novela;Psicologico
+9788422616221,El resplandor,Best Seller,Español,Debolsillo,1977-01-28,688,Un invierno aislado en un hotel con fuerzas siniestras.,resplandor.jpg,Stephen King,Terror;Suspenso;Ficcion
+9786073836104,Fahrenheit 451,Debolsillo Contemporanea,Español,Debolsillo,2023-08-01,192,Una sociedad del futuro donde los libros estan prohibidos.,fahrenheit.jpg,Ray Bradbury,Ciencia Ficcion;Distopia;Literatura

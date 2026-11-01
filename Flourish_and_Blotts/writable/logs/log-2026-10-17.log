@@ -1,0 +1,143 @@
+ERROR - 2026-10-17 12:45:11 --> Cannot add or update a child row: a foreign key constraint fails (`flourish_blotts`.`bibliotecas`, CONSTRAINT `bibliotecas_dni_nie_foreign` FOREIGN KEY (`dni_nie`) REFERENCES `usuarios` (`dni_nie`) ON DELETE CASCADE ON UPDATE CASCADE)
+ERROR - 2026-10-17 12:46:11 --> Cannot add or update a child row: a foreign key constraint fails (`flourish_blotts`.`libro_autor`, CONSTRAINT `libro_autor_id_autor_foreign` FOREIGN KEY (`id_autor`) REFERENCES `autores` (`id_autor`) ON DELETE CASCADE ON UPDATE CASCADE)
+ERROR - 2026-10-17 12:46:34 --> Cannot add or update a child row: a foreign key constraint fails (`flourish_blotts`.`usuarios`, CONSTRAINT `usuarios_id_rol_foreign` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE)
+ERROR - 2026-10-17 14:40:01 --> Duplicate entry '1234567891234' for key 'libros.PRIMARY'
+ERROR - 2026-10-17 14:44:40 --> Cannot add or update a child row: a foreign key constraint fails (`flourish_blotts`.`libro_autor`, CONSTRAINT `libro_autor_id_autor_foreign` FOREIGN KEY (`id_autor`) REFERENCES `autores` (`id_autor`) ON DELETE CASCADE ON UPDATE CASCADE)
+ERROR - 2026-10-17 15:31:52 --> Duplicate entry '1234567891234' for key 'libros.PRIMARY'
+ERROR - 2026-10-17 15:32:44 --> Cannot add or update a child row: a foreign key constraint fails (`flourish_blotts`.`libro_autor`, CONSTRAINT `libro_autor_id_autor_foreign` FOREIGN KEY (`id_autor`) REFERENCES `autores` (`id_autor`) ON DELETE CASCADE ON UPDATE CASCADE)
+ERROR - 2026-10-17 15:36:10 --> Cannot add or update a child row: a foreign key constraint fails (`flourish_blotts`.`libro_autor`, CONSTRAINT `libro_autor_id_autor_foreign` FOREIGN KEY (`id_autor`) REFERENCES `autores` (`id_autor`) ON DELETE CASCADE ON UPDATE CASCADE)
+ERROR - 2026-10-17 15:44:00 --> Duplicate entry '1234567891234' for key 'libros.PRIMARY'
+ERROR - 2026-10-17 15:45:49 --> Duplicate entry '1234567891234' for key 'libros.PRIMARY'
+CRITICAL - 2026-10-17 16:08:01 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\GeneralController.php on line 22.
+ 1 APPPATH\Controllers\GeneralController.php(22): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to access array offset on value of type null', 'APPPATH\\Controllers\\GeneralController.php', 22, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\GeneralController->pagina_principal()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GeneralController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2026-10-17 17:35:09 --> Trying to access array offset on value of type null
+in APPPATH\Views\principal\horarios.php on line 23.
+ 1 APPPATH\Views\principal\horarios.php(23): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to access array offset on value of type null', 'APPPATH\\Views\\principal\\horarios.php', 23, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\principal\\horarios.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('principal/horarios', [], true)
+ 5 APPPATH\Controllers\GeneralController.php(152): view('principal/horarios', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\GeneralController->horarios()
+ 7 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GeneralController))
+ 8 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 17:45:47 --> Call to undefined function App\Models\str_contains()
+in APPPATH\Models\UsuariosModel.php on line 83.
+ 1 APPPATH\Controllers\UsuariosController.php(44): App\Models\UsuariosModel->getUserByMailOrUsername('admin@gmail.com')
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->iniciar_sesion_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 18:04:04 --> Trying to access array offset on value of type null
+in APPPATH\Controllers\UsuariosController.php on line 672.
+ 1 APPPATH\Controllers\UsuariosController.php(672): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to access array offset on value of type null', 'APPPATH\\Controllers\\UsuariosController.php', 672, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->editar_biblioteca()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 18:05:19 --> Undefined offset: 1
+in APPPATH\Controllers\UsuariosController.php on line 672.
+ 1 APPPATH\Controllers\UsuariosController.php(672): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offset: 1', 'APPPATH\\Controllers\\UsuariosController.php', 672, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->editar_biblioteca()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 18:06:12 --> Undefined offset: 1
+in APPPATH\Controllers\UsuariosController.php on line 672.
+ 1 APPPATH\Controllers\UsuariosController.php(672): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offset: 1', 'APPPATH\\Controllers\\UsuariosController.php', 672, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->editar_biblioteca()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 18:06:18 --> Undefined offset: 1
+in APPPATH\Controllers\UsuariosController.php on line 672.
+ 1 APPPATH\Controllers\UsuariosController.php(672): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offset: 1', 'APPPATH\\Controllers\\UsuariosController.php', 672, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->editar_biblioteca()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 20:46:55 --> Trying to access array offset on value of type null
+in APPPATH\Views\principal\horarios.php on line 23.
+ 1 APPPATH\Views\principal\horarios.php(23): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to access array offset on value of type null', 'APPPATH\\Views\\principal\\horarios.php', 23, [...])
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\principal\\horarios.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('principal/horarios', [], true)
+ 5 APPPATH\Controllers\GeneralController.php(152): view('principal/horarios', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\GeneralController->horarios()
+ 7 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GeneralController))
+ 8 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 21:11:23 --> Call to undefined function App\Controllers\str_contains()
+in APPPATH\Controllers\UsuariosController.php on line 169.
+ 1 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+ 2 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 3 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2026-10-17 21:15:27 --> Duplicate entry '9788445074879' for key 'libros.PRIMARY'
+CRITICAL - 2026-10-17 21:15:27 --> Duplicate entry '9788445074879' for key 'libros.PRIMARY'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (\'9788445074879\', \'El Señor de los Anillos: La Comunidad del Anillo\', \'El Señor de los Anillos 1\', \'Castellano\', \'Minotauro\', \'2002-02-12\', \'432\', \'En la adormecida e idílica Comarca, un joven hobbit recibe un encargo que cambiará el destino de la Tierra Media: custodiar el Anillo Único y emprender el viaje para su destrucción.\', \'https://unsplash.com\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(678): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (\'9788445074879\', \'El Señor de los Anillos: La Comunidad del Anillo\', \'El Señor de los Anillos 1\', \'Castellano\', \'Minotauro\', \'2002-02-12\', \'432\', \'En la adormecida e idílica Comarca, un joven hobbit recibe un encargo que cambiará el destino de la Tierra Media: custodiar el Anillo Único y emprender el viaje para su destrucción.\', \'https://unsplash.com\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (\'9788445074879\', \'El Señor de los Anillos: La Comunidad del Anillo\', \'El Señor de los Anillos 1\', \'Castellano\', \'Minotauro\', \'2002-02-12\', \'432\', \'En la adormecida e idílica Comarca, un joven hobbit recibe un encargo que cambiará el destino de la Tierra Media: custodiar el Anillo Único y emprender el viaje para su destrucción.\', \'https://unsplash.com\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1904): CodeIgniter\Database\BaseConnection->query('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (:isbn_13:, :titulo:, :subtitulo:, :idioma:, :editorial:, :fecha_publicacion:, :numero_paginas:, :descripcion:, :imagen:)', [...], false)
+ 5 SYSTEMPATH\Model.php(278): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(738): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(666): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\UsuariosController.php(167): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+10 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+11 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 21:28:56 --> Undefined variable: i
+in APPPATH\Controllers\UsuariosController.php on line 185.
+ 1 APPPATH\Controllers\UsuariosController.php(185): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined variable: i', 'APPPATH\\Controllers\\UsuariosController.php', 185, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 21:50:31 --> Illegal offset type in isset or empty
+in SYSTEMPATH\Model.php on line 488.
+ 1 SYSTEMPATH\Model.php(488): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Illegal offset type in isset or empty', 'SYSTEMPATH\\Model.php', 488, [...])
+ 2 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->getIdValue([...])
+ 3 SYSTEMPATH\Model.php(628): CodeIgniter\BaseModel->shouldUpdate([...])
+ 4 SYSTEMPATH\BaseModel.php(655): CodeIgniter\Model->shouldUpdate([...])
+ 5 APPPATH\Controllers\UsuariosController.php(191): CodeIgniter\BaseModel->save([...])
+ 6 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+ 7 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 8 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+ERROR - 2026-10-17 22:09:00 --> Duplicate entry '9788422616238' for key 'libros.PRIMARY'
+CRITICAL - 2026-10-17 22:09:00 --> Duplicate entry '9788422616238' for key 'libros.PRIMARY'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (\'9788422616238\', \'El sabueso de los Baskerville\', \'Las aventuras de Sherlock Holmes\', \'Castellano\', \'George Newnes\', \'2015-03-25\', \'256\', \'El detective Sherlock Holmes y su implacable ayudante, el doctor Watson, se enfrentan al caso de una maldición familiar en los páramos de Devonshire, donde una bestia fantasmal parece reclamar la vida de los herederos de la familia Baskerville.\', \'https://unsplash.com\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(678): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (\'9788422616238\', \'El sabueso de los Baskerville\', \'Las aventuras de Sherlock Holmes\', \'Castellano\', \'George Newnes\', \'2015-03-25\', \'256\', \'El detective Sherlock Holmes y su implacable ayudante, el doctor Watson, se enfrentan al caso de una maldición familiar en los páramos de Devonshire, donde una bestia fantasmal parece reclamar la vida de los herederos de la familia Baskerville.\', \'https://unsplash.com\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (\'9788422616238\', \'El sabueso de los Baskerville\', \'Las aventuras de Sherlock Holmes\', \'Castellano\', \'George Newnes\', \'2015-03-25\', \'256\', \'El detective Sherlock Holmes y su implacable ayudante, el doctor Watson, se enfrentan al caso de una maldición familiar en los páramos de Devonshire, donde una bestia fantasmal parece reclamar la vida de los herederos de la familia Baskerville.\', \'https://unsplash.com\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1904): CodeIgniter\Database\BaseConnection->query('INSERT INTO `libros` (`isbn_13`, `titulo`, `subtitulo`, `idioma`, `editorial`, `fecha_publicacion`, `numero_paginas`, `descripcion`, `imagen`) VALUES (:isbn_13:, :titulo:, :subtitulo:, :idioma:, :editorial:, :fecha_publicacion:, :numero_paginas:, :descripcion:, :imagen:)', [...], false)
+ 5 SYSTEMPATH\Model.php(278): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(738): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(666): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Controllers\UsuariosController.php(167): CodeIgniter\Model->insert([...])
+ 9 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+10 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+11 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 22:11:25 --> Undefined index: id_autor
+in APPPATH\Controllers\UsuariosController.php on line 190.
+ 1 APPPATH\Controllers\UsuariosController.php(190): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index: id_autor', 'APPPATH\\Controllers\\UsuariosController.php', 190, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2026-10-17 22:14:43 --> Undefined index: id_autor
+in APPPATH\Controllers\UsuariosController.php on line 191.
+ 1 APPPATH\Controllers\UsuariosController.php(191): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index: id_autor', 'APPPATH\\Controllers\\UsuariosController.php', 191, [...])
+ 2 SYSTEMPATH\CodeIgniter.php(898): App\Controllers\UsuariosController->agregar_libro_post()
+ 3 SYSTEMPATH\CodeIgniter.php(468): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UsuariosController))
+ 4 SYSTEMPATH\CodeIgniter.php(351): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()

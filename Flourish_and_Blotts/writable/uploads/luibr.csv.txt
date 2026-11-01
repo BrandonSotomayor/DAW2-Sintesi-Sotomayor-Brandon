@@ -1,0 +1,4 @@
+isbn_13,titulo,subtitulo,idioma,editorial,fecha_publicacion,numero_paginas,descripcion,imagen,autores,categorias
+9788467036732,Don Quijote de la Mancha,Edicion Centenario,Español,Espasa,2015-05-12,1024,La obra cumbre de la literatura española.,quijote.jpg,Miguel de Cervantes,Clasicos;Literatura
+9780451524935,1984,Signet Classics,Ingles,Signet,1950-01-01,328,Una novela distopica sobre el control del gran hermano.,1984.jpg,George Orwell,Ficcion;Distopia;Politica
+9788497592208,Cien años de soledad,Edicion Ilustrada,Español,Debolsillo,2003-04-15,496,La historia de la familia Buendia en Macondo.,soledad.jpg,Gabriel Garcia Marquez,Realismo Magico;Clasicos
