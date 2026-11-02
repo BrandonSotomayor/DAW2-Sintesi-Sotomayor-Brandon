@@ -1,0 +1,7 @@
+{
+  "name": "Flourish_and_Blotts",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
